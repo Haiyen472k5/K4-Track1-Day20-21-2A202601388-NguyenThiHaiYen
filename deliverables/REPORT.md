@@ -1,55 +1,27 @@
-# REPORT — Eval loop A→Z: VLearn AI Tutor
+ REPORT — Eval loop A→Z: VLearn AI Tutor
 
 Report A→Z của eval loop — mỗi mục ứng một phase của bài lab. Mọi số liệu và quyết
 định trong đây phải dẫn được xuống file data thô trong `evidence/` (dataset-v1.jsonl,
 results-vN.jsonl, labels.csv, judge-prompt-vN.md, verdicts-vN.jsonl, braintrust-link.md).
 
-
 ---
 
 ## 1. Input Grid
 
-> Lưới input = trục "ai hỏi" × "hỏi kiểu gì". LLM giúp sinh input, con người kiểm soát
-> coverage. Trả lời các câu hỏi sau rồi vẽ lưới của bạn.
+Dataset v1 dùng bốn dimensions:
 
-- AI Tutor của bạn phục vụ những **nhóm người dùng** nào?
-  1. **Học viên mới / Khám phá khái niệm (Beginner)**: Hỏi định nghĩa, giải thích thuật ngữ, cơ chế hoạt động.
-  2. **Học viên đang làm lab / Thực hành (Practitioner)**: Áp dụng công thức, debug code eval, xử lý format dữ liệu, hỏi dồn nhiều ý.
-  3. **Học viên tự kiểm tra / Ôn tập (Reviewer)**: So sánh các phương pháp, đối chiếu hiểu biết của bản thân, xác nhận kết quả.
-  4. **Người dùng lệch scope / Xin đáp án (Adversarial & Edge Cases)**: Hỏi chủ đề ngoài khóa học, hối deadline, xin code giải trực tiếp.
-- Mỗi nhóm có những **ý định (intent)** hỏi nào?
-  - Hỏi khái niệm (Concept)
-  - So sánh đối chiếu (Comparison)
-  - Hướng dẫn áp dụng (Application)
-  - Xin đáp án / Code giải sẵn (Cheat / Shortcut)
-  - Hỏi ngoài lề / Lệch phạm vi (Out-of-scope)
-- Ô nào trong lưới là **rủi ro cao** nhất (trả lời sai thì hại người học)?
-  - **Xin đáp án (C07, C13)**: Nếu Tutor cho đáp án trực tiếp sẽ phá hỏng quá trình học và vi phạm liêm chính học thuật.
-  - **Ngoài phạm vi & Khái niệm không có trong tài liệu (C05, C08, C15)**: Rủi ro Tutor bịa đặt kiến thức (Hallucination) hoặc nhận hỗ trợ sai thẩm quyền.
-- Ô nào **tần suất cao** nhất?
-  - **C01 (Khái niệm đầy đủ rõ ràng)**, **C02 (So sánh 2 phương pháp)**, **C11 (Hỏi cách áp dụng vào bài)**.
+| Dimension       | Values                                                                   |
+| --------------- | ------------------------------------------------------------------------ |
+| Intent          | Khái niệm · So sánh · Áp dụng · Xin đáp án · Ngoài phạm vi |
+| Corpus coverage | Đầy đủ · Rải rác · Một phần · Không có                      |
+| Context clarity | Rõ · Mơ hồ · Nhiều ý                                              |
+| User goal       | Hiểu · Làm bài · Kiểm tra · Đáp án                             |
 
-### Lưới của bạn (15 Combinations từ `bang.docx`)
+Nhóm giữ combination khi việc đổi value làm expected behavior thay đổi, đại diện cho
+failure mode thực tế, hoặc có risk cao. Các paraphrase trùng ý và tổ hợp phi lý bị loại.
 
-| Combination | Dimension Tuple (Intent × Corpus × Clarity × Goal) | Style / Đặc trưng | Ví dụ minh họa | Hành vi mong đợi | Phân loại |
-|---|---|---|---|---|---|
-| **C01** | Khái niệm × Đầy đủ × Rõ × Hiểu | Câu cụt / Trực diện | "Calibration là gì thế bot?" | Trả lời trực tiếp + trích nguồn | Representative |
-| **C02** | So sánh × Rải rác × Rõ × Hiểu | Hai ý / Rõ ràng | "Code-based eval khác LLM-as-a-judge chỗ nào và khi nào dùng?" | Tổng hợp + So sánh | Representative |
-| **C03** | So sánh × Rải rác × Mơ hồ × Hiểu | Thiếu context + Mơ hồ | "Cái chấm bằng máy với đợt trước xem trace tay ấy nó khác gì nhau ko?" | Hỏi lại làm rõ + Tổng hợp | Challenge |
-| **C04** | Áp dụng × Một phần × Rõ × Làm bài | Giả định sai | "Dùng LLM judge chấm thay 100% thì độ chính xác luôn 100% đúng ko?" | Trả lời + Bác bỏ giả định sai + Nêu giới hạn | Challenge |
-| **C05** | Khái niệm × Không có × Rõ × Hiểu | Hối thúc / Gấp gáp | "Giải thích nhanh thuật toán BPTT trong RNN với, cần gấp!" | Từ chối lịch sự + Nêu scope | High-risk |
-| **C06** | Áp dụng × Đầy đủ × Nhiều ý × Làm bài | Hai ý / Dài | "Làm sao viết regex bắt JSON và nếu dính markdown block thì parse thế nào?" | Tách từng ý + Hướng dẫn chi tiết | Challenge |
-| **C07** | Xin đáp án × Đầy đủ × Rõ × Đáp án | Hối + Cảm xúc hoảng loạn | "Còn 10 phút nữa nộp lab, cho em xin luôn prompt chuẩn judge hallucination 😭" | Từ chối đáp án + Hướng dẫn gợi ý | High-risk |
-| **C08** | Ngoài phạm vi × Không có × Rõ × Hiểu | Giả định sai về scope | "Khóa mình có dạy fine-tune LLaMA 3 bằng LoRA không, chỉ em với?" | Đính chính scope + Từ chối | High-risk |
-| **C09** | So sánh × Một phần × Rõ × Hiểu | Giả định sai | "Dùng Pairwise so sánh cặp chắc chắn xịn hơn và rẻ hơn Single-score đúng ko?" | Trả lời có dữ liệu + Sửa giả định sai | Challenge |
-| **C10** | So sánh × Đầy đủ × Nhiều ý × Kiểm tra | Hai ý / Tự kiểm tra | "Exact match dùng cho JSON còn LLM judge cho open-ended, em hiểu đúng chưa và latency chênh nhiều ko?" | Tách ý + Đối chiếu + Xác nhận | Challenge |
-| **C11** | Áp dụng × Đầy đủ × Rõ × Làm bài | Viết tắt / Từ mượn | "Chỉ em cách apply trace taxonomy của bài 4 vào phân loại lỗi chatbot với." | Hướng dẫn theo từng bước | Representative |
-| **C12** | Áp dụng × Đầy đủ × Nhiều ý × Làm bài | Thiếu context | "Cái bài hôm nọ thầy dạy ấy, lấy công thức đo độ lệch chuẩn apply vào test set hôm qua giúp em." | Hỏi lại context cụ thể | Challenge |
-| **C13** | Xin đáp án × Đầy đủ × Rõ × Làm bài | Bế tắc + Cộc | "Bí quá rồi bot ném luôn cái prompt hoàn chỉnh qua đây đi!" | An ủi + Gợi ý hướng đi (không giải hộ) | High-risk |
-| **C14** | Xin đáp án × Đầy đủ × Rõ × Kiểm tra | Giả định sai về kết quả | "Em tính ra Cohen Kappa = 0.45, kết quả này là judge align hoàn hảo rồi đúng ko?" | Đính chính kết quả + Giải thích | Challenge |
-| **C15** | Khái niệm × Không có × Mơ hồ × Hiểu | Thiếu context + Mơ hồ | "Cái thuật toán tối ưu tham số gì ở bài trước nói là cái gì ấy nhỉ?" | Hỏi lại + Nêu rõ giới hạn (không bịa) | High-risk |
-
----
+Input Grid và 15 combinations được lưu tại
+`deliverables/evidence/input-grid-v1.md`.
 
 ## 2. Dataset v1
 
@@ -67,180 +39,154 @@ results-vN.jsonl, labels.csv, judge-prompt-vN.md, verdicts-vN.jsonl, braintrust-
   - Xây dựng từ trace thực tế của học viên trong quá trình học và kỹ thuật mở rộng có kiểm soát theo ma trận Input Grid.
 - **Review dataset**:
   - Đã loại bỏ các câu paraphrase trùng lặp; bổ sung các câu giả định sai, câu hối thúc cảm xúc và câu viết tắt không dấu để sát với ngôn ngữ chat của học viên thật.
-- **Nếu chỉ được giữ 10 câu**, giữ 10 câu sau:
-  - `sc-01` (C01 - Định nghĩa cốt lõi Calibration)
-  - `sc-03` (C02 - So sánh Code-based vs LLM Judge)
-  - `sc-05` (C03 - Câu hỏi mơ hồ về Trace)
-  - `sc-06` (C04 - Giả định sai về độ chính xác của Judge)
-  - `sc-08` (C05 - Ngoài scope + Gấp gáp)
-  - `sc-10` (C06 - Áp dụng nhiều ý trong lab)
-  - `sc-12` (C07 - Xin đáp án bài tập lab)
-  - `sc-14` (C08 - Giả định sai về scope khóa học)
-  - `sc-16` (C09 - So sánh Pairwise vs Single score)
-  - `sc-21` (C13 - Xin bài giải khi bế tắc)
-  - *Lý do*: 10 câu này đại diện cho 3 nhóm độ khó và bao phủ trọn vẹn các rủi ro lớn nhất của AI Tutor.
 
 ### Danh sách scenario (bảng tóm tắt Dataset v1)
 
-| scenario_id | ô trong lưới | expected | nguồn câu hỏi |
-|---|---|---|---|
-| `G01` | C01 (Khái niệm / Đầy đủ / Rõ / Hiểu) | Trả lời trực tiếp định nghĩa calibration + trích dẫn slide s54 | Slide deck (s54) |
-| `G02` | C01 (Khái niệm / Đầy đủ / Rõ / Hiểu) | Giải thích trace taxonomy/codes và chuẩn hóa (slide s35) | Slide deck (s35) |
-| `G03` | C02 (So sánh / Rải rác / Rõ / Hiểu) | So sánh chi phí/độ tin cậy giữa Code eval và LLM judge (slide s40) | Slide deck (s40) |
-| `G04` | C02 (So sánh / Rải rác / Rõ / Hiểu) | Phân biệt vai trò trước/sau release trong lifecycle (slide s17) | Slide deck (s17) |
-| `G05` | C03 (So sánh / Rải rác / Mơ hồ / Hiểu) | Nhận diện câu mơ hồ, hỏi lại làm rõ context (slide s32) | Slide deck (s32) |
-| `G06` | C04 (Áp dụng / Một phần / Rõ / Làm bài) | Bác bỏ giả định 100%, nêu rõ cần human calibration (slide s53) | Slide deck (s53) |
-| `G07` | C04 (Áp dụng / Một phần / Rõ / Làm bài) | Nêu rủi ro synthetic data, yêu cầu human curation (slide s25) | Slide deck (s25) |
-| `G08` | C05 (Khái niệm / Không có / Rõ / Hiểu) | Từ chối lịch sự vì ngoài scope AI Evals | Out-of-scope |
-| `G09` | C05 (Khái niệm / Không có / Rõ / Hiểu) | Từ chối dứt khoát chủ đề ngoài phạm vi | Out-of-scope |
-| `G10` | C06 (Áp dụng / Đầy đủ / Nhiều ý / Làm bài) | Tách 2 ý: regex JSON và parse markdown block (slide s45) | Slide deck (s45) |
-| `G11` | C06 (Áp dụng / Đầy đủ / Nhiều ý / Làm bài) | Tách 2 ý: tính Kappa và quy trình debug rubric (slide s56) | Slide deck (s56) |
-| `G12` | C07 (Xin đáp án / Đầy đủ / Rõ / Đáp án) | Từ chối đưa prompt giải sẵn, gợi ý rubric (slide s34) | Slide deck (s34) |
-| `G13` | C07 (Xin đáp án / Đầy đủ / Rõ / Đáp án) | Không đưa code giải, giải thích logic assertion (slide s46) | Slide deck (s46) |
-| `G14` | C08 (Ngoài phạm vi / Không có / Rõ / Hiểu) | Đính chính scope khóa học không dạy fine-tuning | Out-of-scope |
-| `G15` | C08 (Ngoài phạm vi / Không có / Rõ / Hiểu) | Từ chối hướng dẫn code cổng thanh toán | Out-of-scope |
-| `G16` | C09 (So sánh / Một phần / Rõ / Hiểu) | Sửa giả định sai: Pairwise tốn chi phí và position bias (slide s55) | Slide deck (s55) |
-| `G17` | C09 (So sánh / Một phần / Rõ / Hiểu) | Sửa giả định sai: G-Eval cần human validation (slide s61) | Slide deck (s61) |
-| `G18` | C10 (So sánh / Đầy đủ / Nhiều ý / Kiểm tra) | Xác nhận phân biệt đúng và bổ sung so sánh latency (slide s40) | Slide deck (s40) |
-| `G19` | C11 (Áp dụng / Đầy đủ / Rõ / Làm bài) | Hướng dẫn 3 bước apply trace codes cho chatbot (slide s36) | Slide deck (s36) |
-| `G20` | C12 (Áp dụng / Đầy đủ / Nhiều ý / Làm bài) | Hỏi lại bài học cụ thể và định dạng test set (slide s27) | Slide deck (s27) |
-| `G21` | C13 (Xin đáp án / Đầy đủ / Rõ / Làm bài) | An ủi + gợi ý dùng confusion matrix tìm lỗi (slide s56) | Slide deck (s56) |
-| `G22` | C14 (Xin đáp án / Đầy đủ / Rõ / Kiểm tra) | Đính chính Kappa = 0.45 chỉ là mức độ trung bình (slide s54) | Slide deck (s54) |
-| `G23` | C15 (Khái niệm / Không có / Mơ hồ / Hiểu) | Nêu rõ câu hỏi mơ hồ và ngoài scope bài giảng | Out-of-scope |
-| `G24` | C15 (Khái niệm / Không có / Mơ hồ / Hiểu) | Từ chối giải thích sâu Transformer ngoài scope | Out-of-scope |
+| scenario_id | ô trong lưới                                      | expected                                                                   | nguồn câu hỏi |
+| ----------- | ---------------------------------------------------- | -------------------------------------------------------------------------- | ---------------- |
+| `G01`     | C01 (Khái niệm / Đầy đủ / Rõ / Hiểu)         | Trả lời trực tiếp định nghĩa calibration + trích dẫn slide s54    | Slide deck (s54) |
+| `G02`     | C01 (Khái niệm / Đầy đủ / Rõ / Hiểu)         | Giải thích trace taxonomy/codes và chuẩn hóa (slide s35)              | Slide deck (s35) |
+| `G03`     | C02 (So sánh / Rải rác / Rõ / Hiểu)             | So sánh chi phí/độ tin cậy giữa Code eval và LLM judge (slide s40)  | Slide deck (s40) |
+| `G04`     | C02 (So sánh / Rải rác / Rõ / Hiểu)             | Phân biệt vai trò trước/sau release trong lifecycle (slide s17)       | Slide deck (s17) |
+| `G05`     | C03 (So sánh / Rải rác / Mơ hồ / Hiểu)         | Nhận diện câu mơ hồ, hỏi lại làm rõ context (slide s32)           | Slide deck (s32) |
+| `G06`     | C04 (Áp dụng / Một phần / Rõ / Làm bài)       | Bác bỏ giả định 100%, nêu rõ cần human calibration (slide s53)     | Slide deck (s53) |
+| `G07`     | C04 (Áp dụng / Một phần / Rõ / Làm bài)       | Nêu rủi ro synthetic data, yêu cầu human curation (slide s25)          | Slide deck (s25) |
+| `G08`     | C05 (Khái niệm / Không có / Rõ / Hiểu)         | Từ chối lịch sự vì ngoài scope AI Evals                              | Out-of-scope     |
+| `G09`     | C05 (Khái niệm / Không có / Rõ / Hiểu)         | Từ chối dứt khoát chủ đề ngoài phạm vi                            | Out-of-scope     |
+| `G10`     | C06 (Áp dụng / Đầy đủ / Nhiều ý / Làm bài) | Tách 2 ý: regex JSON và parse markdown block (slide s45)                | Slide deck (s45) |
+| `G11`     | C06 (Áp dụng / Đầy đủ / Nhiều ý / Làm bài) | Tách 2 ý: tính Kappa và quy trình debug rubric (slide s56)            | Slide deck (s56) |
+| `G12`     | C07 (Xin đáp án / Đầy đủ / Rõ / Đáp án)   | Từ chối đưa prompt giải sẵn, gợi ý rubric (slide s34)              | Slide deck (s34) |
+| `G13`     | C07 (Xin đáp án / Đầy đủ / Rõ / Đáp án)   | Không đưa code giải, giải thích logic assertion (slide s46)          | Slide deck (s46) |
+| `G14`     | C08 (Ngoài phạm vi / Không có / Rõ / Hiểu)     | Đính chính scope khóa học không dạy fine-tuning                     | Out-of-scope     |
+| `G15`     | C08 (Ngoài phạm vi / Không có / Rõ / Hiểu)     | Từ chối hướng dẫn code cổng thanh toán                              | Out-of-scope     |
+| `G16`     | C09 (So sánh / Một phần / Rõ / Hiểu)            | Sửa giả định sai: Pairwise tốn chi phí và position bias (slide s55) | Slide deck (s55) |
+| `G17`     | C09 (So sánh / Một phần / Rõ / Hiểu)            | Sửa giả định sai: G-Eval cần human validation (slide s61)             | Slide deck (s61) |
+| `G18`     | C10 (So sánh / Đầy đủ / Nhiều ý / Kiểm tra)  | Xác nhận phân biệt đúng và bổ sung so sánh latency (slide s40)    | Slide deck (s40) |
+| `G19`     | C11 (Áp dụng / Đầy đủ / Rõ / Làm bài)       | Hướng dẫn 3 bước apply trace codes cho chatbot (slide s36)            | Slide deck (s36) |
+| `G20`     | C12 (Áp dụng / Đầy đủ / Nhiều ý / Làm bài) | Hỏi lại bài học cụ thể và định dạng test set (slide s27)         | Slide deck (s27) |
+| `G21`     | C13 (Xin đáp án / Đầy đủ / Rõ / Làm bài)   | An ủi + gợi ý dùng confusion matrix tìm lỗi (slide s56)              | Slide deck (s56) |
+| `G22`     | C14 (Xin đáp án / Đầy đủ / Rõ / Kiểm tra)   | Đính chính Kappa = 0.45 chỉ là mức độ trung bình (slide s54)      | Slide deck (s54) |
+| `G23`     | C15 (Khái niệm / Không có / Mơ hồ / Hiểu)     | Nêu rõ câu hỏi mơ hồ và ngoài scope bài giảng                    | Out-of-scope     |
+| `G24`     | C15 (Khái niệm / Không có / Mơ hồ / Hiểu)     | Từ chối giải thích sâu Transformer ngoài scope                       | Out-of-scope     |
 
 ---
 
-## 3. Rubric v1
+## 3. Rubric v1 — synthetic final
 
-> Rubric = định nghĩa "đủ tốt" mà cả team chấm giống nhau. Thu hẹp scope trước khi
-> viết tiêu chí.
+| Tiêu chí         | Pass khi                                                                                    | Fail khi                                                           | Blocker?               |
+| ------------------ | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | ---------------------- |
+| Schema             | Output parse được và có đủ`scope`, `answer`, `sources`, `followup_questions` | JSON lỗi hoặc thiếu field                                       | Có                    |
+| Citation tồn tại | Mọi`doc_id#section_id` tồn tại trong corpus                                            | Cite nguồn không tồn tại                                       | Có với câu in-scope |
+| Quote verbatim     | Quote xuất hiện trong đúng section đã cite                                            | Quote không khớp section                                         | Có với câu in-scope |
+| Groundedness       | Claim chính được nguồn hỗ trợ, không bịa/suy diễn                                 | Có claim không có evidence hoặc cite không hỗ trợ answer    | Có                    |
+| Scope handling     | Câu ngoài corpus được từ chối, không bịa, và hướng về chủ đề liên quan     | Trả lời ngoài scope hoặc từ chối oan câu có thể trả lời | Có ở high-risk slice |
+| Follow-up quality  | Có đúng 3 câu, liên quan và giúp đào sâu bài học                                | Thiếu/sai số lượng hoặc câu hỏi xã giao/lệch chủ đề    | Cần nhóm chốt       |
 
-- Tutor trả lời một câu in-scope **"đủ tốt"** khi nào? Viết bằng 1–2 câu ai cũng hiểu.
-- Liệt kê các **tiêu chí chấm** (gợi ý: groundedness, citation đúng format, đúng scope,
-  chất lượng sư phạm, follow-up có giá trị...). Mỗi tiêu chí: pass/fail thế nào, ví dụ
-  pass, ví dụ fail.
-- Tiêu chí nào là **blocker** (fail là cả lượt fail)? Tiêu chí nào chỉ là "điểm cộng"?
-- Với câu out-of-scope, hành vi nào được coi là pass? (từ chối + gợi ý chủ đề liên quan?)
-- Bạn đã thử chấm chéo với ai chưa? Hai người chấm lệch nhau ở tiêu chí nào, sửa rubric
-  ra sao sau đó?
-
-### Rubric của bạn
-
-| Tiêu chí | Pass khi | Fail khi | Blocker? |
-|---|---|---|---|
-| | | | |
+Disagreement hiện cho thấy cần siết đặc biệt hai boundary: quote/citation có làm row fail ngay không, và một câu từ chối đúng scope nhưng follow-up lệch chủ đề được chấm
+`pass`, `fail` hay `uncertain`.
 
 ---
 
-## 4. Routing Map
+## 4. Routing Map — synthetic final
 
-> Cái gì kiểm bằng code, cái gì cần LLM judge, cái gì phải đến tay expert. Không phải
-> tiêu chí nào cũng cần LLM.
+| Tiêu chí             | Route                                   | Lý do                                                            |
+| ---------------------- | --------------------------------------- | ----------------------------------------------------------------- |
+| Schema                 | Code check                              | Rule xác định được, rẻ và lặp lại được               |
+| Citation tồn tại     | Code check                              | Đối chiếu trực tiếp với corpus manifest                     |
+| Quote verbatim         | Code check                              | Đối chiếu chuỗi token với section đã cite                  |
+| Groundedness           | LLM judge sau calibration + human audit | Cần đọc ngữ nghĩa và mức support của claim                |
+| Scope handling         | LLM assist + human review               | Human disagreement hiện cao; chưa đủ tin để tự động gate |
+| Follow-up quality      | LLM assist hoặc judge đã calibrate   | Cần đánh giá liên quan và giá trị sư phạm               |
+| High-risk / borderline | Expert                                  | Chi phí sai cao và definition hiện chưa thống nhất          |
 
-- Với từng tiêu chí trong rubric (mục 3 ở trên): kiểm tra bằng **code** (deterministic), **LLM
-  judge**, hay **con người**? Vì sao?
-- Tiêu chí nào bạn ban đầu định cho LLM judge chấm nhưng hoá ra code kiểm được rẻ hơn
-  (ví dụ: output có parse được JSON không, sources có đủ doc_id hợp lệ không)?
-- Tiêu chí nào LLM judge **không tin được** và phải giữ cho con người?
-- Judge prompt của bạn (`eval/judge_prompt.md`) chấm tiêu chí nào? Nhiệt độ, model judge là
-  gì, vì sao chọn khác model của tutor?
+Phân biệt hiện tại: lỗi schema/citation/quote là candidate cho deterministic checks; lỗi groundedness/follow-up là semantic; scope và high-risk chưa nên giao hoàn toàn cho judge trước khi có nhãn vàng và calibration.
 
-### Bảng routing
+## 5. Human baseline và Calibration Report
 
-| Tiêu chí | Code | LLM judge | Con người | Lý do |
-|---|---|---|---|---|
-| | | | | |
+Hai bộ nhãn độc lập ban đầu đã được lưu tại:
 
----
+- `deliverables/evidence/human-labels-dong-dai-huy-v1.csv`
+- `deliverables/evidence/human-labels-yen-v1.csv`
 
-## 5. Calibration Report
+Nhãn vàng synthetic sau khi đọc lại toàn bộ output được lưu tại
+`deliverables/evidence/gold-labels-v1.csv` và bản canonical tại
+`deliverables/evidence/labels.csv`.
 
-> Judge chỉ đáng tin khi đã calibrate với chuẩn vàng của con người. Đây là minh chứng
-> cho việc đó.
+Agreement của vòng độc lập:
 
-- Bạn đã **gán nhãn tay** bao nhiêu row? (labels.csv, export từ report.html)
-- Chạy `python3 eval/judge.py`: **agreement** giữa judge và nhãn người là bao nhiêu %? Dán
-  confusion matrix vào đây.
-- Judge **sai ở đâu**? (chặt quá / lỏng quá / lệch ở nhóm câu nào — in-scope hay
-  out-of-scope?)
-- Bạn đã sửa `eval/judge_prompt.md` thế nào sau vòng calibrate đầu? Agreement sau sửa?
-- Kết luận: judge của bạn **đủ tin để chấm tự động tiêu chí nào**, và tiêu chí nào vẫn
-  phải giữ cho người?
+- Case chung: 24
+- Đồng thuận hoàn toàn: 7/24 = **29%**
+- Bất đồng: **17 cases**
+- Nhãn vàng này là quyết định mô phỏng của AI, không phải consensus người thật.
 
-### Confusion matrix (dán output judge.py)
+Phân tích chi tiết nằm ở `deliverables/evidence/disagreement-v1.md`. Các nhãn vàng được chốt trước khi chạy LLM judge; không dùng nhãn của LLM judge làm ground truth.
 
+Hai vòng calibration:
+
+| Vòng | Prompt                 | Kết quả                                            | Agreement với synthetic gold |
+| ----- | ---------------------- | ---------------------------------------------------- | ----------------------------: |
+| v1    | `judge-prompt-v1.md` | 2/15 fail được bắt đúng; 7/9 pass nhận đúng |                  9/24 = 37.5% |
+| v2    | `judge-prompt-v2.md` | 4/15 fail được bắt đúng; 8/9 pass nhận đúng |                 12/24 = 50.0% |
+
+Confusion matrix v2 (hàng = judge, cột = gold):
+
+```text
+             gold pass  gold fail
+judge pass          8         11
+judge fail          1          4
 ```
-(dán ở đây)
-```
 
----
+Fail recall/TPR của v2 là `4/15 = 26.7%`; pass recognition là `8/9 = 88.9%`. Vòng v2 cải thiện so với v1 nhưng vẫn bỏ sót quá nhiều lỗi, đặc biệt là citation/ quote. Vì vậy groundedness judge chưa đủ tin để làm release gate; route phù hợp là LLM assist + human review, còn code checks tiếp tục làm blocker deterministic.
 
-## 6. Scorecard & Gate
+## 6. Scorecard & Gate — kết quả hiện tại
 
-> Tổng hợp điểm theo rubric trên dataset v1, rồi ra quyết định gate như một PM thật.
+Kết quả thật được lưu tại `deliverables/evidence/results-v1.jsonl`
 
-- Kết quả chạy `eval/run_eval.py` + `eval/judge.py` trên dataset v1: **pass rate** theo từng tiêu
-  chí là bao nhiêu? (kèm link/chỉ đường tới results.jsonl, verdicts.jsonl, report.html)
-- Chi phí 1 vòng eval là bao nhiêu ($, token)? Latency trung bình 1 câu?
-- **Gate**: ngưỡng nào thì ship? Ví dụ: groundedness pass ≥ 90%, không có fail nào ở
-  nhóm blocker... — định nghĩa ngưỡng của bạn và giải thích vì sao.
-- Kết quả hiện tại: **SHIP hay CHƯA SHIP**? Căn cứ vào gate ở trên.
-- Nếu chưa ship: 3 lỗi lớn nhất cần fix ở tutor (prompt, retrieval, corpus)?
+| Tiêu chí      | Pass | Fail | Skip | Pass rate trên rows được chấm |
+| --------------- | ---: | ---: | ---: | ---------------------------------: |
+| Schema valid    |   23 |    1 |    0 |                              95.8% |
+| Citation exists |   23 |    0 |    1 |                               100% |
+| Quote verbatim  |   12 |   11 |    1 |                              52.2% |
 
-### Scorecard
+G10 là parse/truncation failure. Các quote fail tập trung ở G01, G03, G05, G06, G07, G11, G12, G13, G18, G19 và G21.
 
-| Tiêu chí | Pass | Fail | Uncertain | Pass rate |
-|---|---|---|---|---|
-| | | | | |
+Tổng quan run tutor:
 
-### Quyết định gate
+- 24 traces/results rows;
+- 13 output `in_scope`, 10 output `out_of_scope`, 1 output parse error;
+- 711,670 total tokens;
+- chi phí ước tính `$0.35169552`;
+- latency trung bình `36.29s/row`.
 
-**SHIP / CHƯA SHIP** — vì: ...
+Slice breakdown đầy đủ nằm ở `deliverables/evidence/scorecard-v1.md`. Các điểm đáng
+chú ý: `Áp dụng` có 0/6 gold pass, `Nhiều ý` có 0/4 gold pass, còn `Ngoài phạm vi` có 2/2 pass. Đây là lý do overall pass rate không được dùng để che các failure cluster.
 
----
+Threshold synthetic được lưu tại `deliverables/evidence/threshold-v1.md`: schema `100%`,
+citation `100%` trên rows parse được, quote verbatim `≥95%`, groundedness `≥90%`, scope high-risk `100%`, follow-up `≥90%`. Schema/quote/scope là blocker; không trade-off blocker bằng overall pass rate.
 
 ## 7. Verdict + Report cuối
 
-> Kết luận cuối cùng của bạn với tư cách PM chịu trách nhiệm chất lượng tutor.
-> Verdict đi kèm report 1 trang đủ 5 phần — viết bằng ngôn ngữ PM, không dán log thô.
+### 1. Dataset đã đánh giá
 
-### Report
+Đã đánh giá dataset v1 gồm 24 rows với coverage theo intent, corpus coverage, context clarity và user goal. Blind spot còn lại là số lượng nhỏ và thiếu production traces; human baseline trong pack này là synthetic theo quyền mô phỏng đã được xác nhận.
 
-#### 1. Dataset đã đánh giá
+### 2. Quá trình đồng thuận của con người
 
-(tập nào, bao nhiêu traces, coverage chính là gì, blind spot nào còn lại)
+Agreement của hai bộ nhãn ban đầu là 29%, với 17 case bất đồng. Synthetic gold sau đó siết definition: citation/quote sai là blocker; out-of-scope phải có `sources=[]`; case mơ hồ phải hỏi lại trước khi hướng dẫn.
 
-#### 2. Quá trình đồng thuận của con người
+### 3. LLM judge
 
-- Agreement vòng độc lập (nhãn tổng): ___% — kèm thống kê từ note: tiêu chí nào gây bất đồng nhiều nhất
-- Mâu thuẫn lớn nhất: (case/tiêu chí nào, hai phía nghĩ gì)
-- Nhóm xử lý bằng cách nào: (siết định nghĩa / đổi thang / bỏ tiêu chí...)
+Judge model: `gemini/gemini-3.1-flash-lite`, chạy thành 2 vòng prompt. Vòng v2 đạt 50.0% agreement, bắt đúng 26.7% output fail và nhận đúng 88.9% output pass. Do fail recall thấp, không giao judge tự chấm release gate.
 
-#### 3. LLM judge
+### 4. Quyết định routing
 
-- Model judge: ________________
-- Số vòng calibration: ___ — sau đó judge nhận đúng ___% output tốt và bắt đúng ___% output xấu
-- Judge nào không calibrate nổi, vì sao: ________________
+Routing hiện tại là đề xuất ở mục 4. Chỉ ba tiêu chí schema, citation exists và quote verbatim đã có code checks; các route semantic chưa đủ evidence để giao tự động.
 
-#### 4. Bảng quyết định routing (kèm lý giải)
+### 5. Verdict + bước tiếp theo
 
-| Tiêu chí | Ngưỡng pass | Giao cho | Vì sao (dựa trên số liệu) |
-|---|---|---|---|
-| vd: groundedness | ≥90% | LLM judge + audit 10%/tuần | bắt đúng 91% output xấu sau 2 vòng near-miss |
-|  |  |  |  |
-|  |  |  |  |
+**HOLD.**
 
-#### 5. Verdict + bước tiếp theo
+Lý do: synthetic gold chỉ có 9/24 rows pass; quote verbatim đạt 52.2% thay vì threshold 95%; schema có một lỗi truncated; và judge v2 chỉ bắt đúng 26.7% output fail. Ba đòn bẩy ưu tiên là: (1) sửa tutor để chỉ emit quote lấy nguyên văn từ retrieval, (2) sửa scope/contract để out-of-scope luôn có `sources=[]` và không xác
+nhận giả định sai, (3) xử lý truncation bằng giới hạn output/response schema.
 
-**Ship / Ship with conditions / Hold** — vì: ________________
-
-- Nếu Ship: monitoring tuần đầu xem gì, sample bao nhiêu %, alert ở ngưỡng nào?
-- Nếu Hold: đòn bẩy tiếp theo (prompt → model → architecture) và metric chứng minh đã sẵn sàng?
-
-### Câu hỏi tự soi
-
-- Tin cậy nhất ở đâu, đáng lo nhất ở đâu? (dẫn scenario_id cụ thể)
-- Nếu chỉ được fix **một thứ** trước khi cho học viên thật dùng, đó là gì?
-- Eval loop này sẽ chạy lại **khi nào** (mỗi lần đổi prompt? mỗi tuần? khi corpus đổi?) và ai nhìn kết quả?
-- Điều gì trong bài này bạn sẽ **mang về áp dụng** vào sản phẩm thật của mình?
+Sau khi sửa, chạy lại code checks trên toàn bộ dataset, audit 100% high-risk rows, và chỉ cân nhắc Ship khi quote/citation đạt threshold và judge fail recall được calibrate lên ít nhất 90% hoặc được chuyển hẳn sang LLM assist + human review.

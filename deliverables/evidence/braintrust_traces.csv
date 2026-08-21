@@ -1,0 +1,429 @@
+﻿scenario_id,input,scope,answer,sources,followup_questions,retrieved_count,retrieved_sections,latency_s,prompt_tokens,completion_tokens,total_tokens,cost_usd,raw_content
+G01,Calibration là gì thế bot?,in_scope,"Calibration (hiệu chỉnh) là một quy trình lặp đi lặp lại nhằm đảm bảo rằng các đánh giá của hệ thống AI phản ánh chính xác quan điểm của các chuyên gia trong lĩnh vực. Nó không chỉ là một phép tính đơn lẻ mà bao gồm các bước như gán nhãn, chạy thử, đo lường và tinh chỉnh để cải thiện độ chính xác của hệ thống.","ai-evals-m09#lesson-1-the-calibration-workflow: ""Calibration is not a one-time calculation. It's an iterative loop: label, run, measure, read disagreements, refine the prompt, measure again."" | ai-evals-m09#why-calibration-is-the-whole-game: ""An uncalibrated judge is worse than no judge.""",Tại sao việc hiệu chỉnh lại quan trọng trong đánh giá hệ thống AI? | Có những phương pháp nào để thực hiện hiệu chỉnh cho hệ thống AI? | Làm thế nào để xác định một hệ thống AI đã được hiệu chỉnh tốt hay chưa?,5,ai-evals-m09#lesson-1-the-calibration-workflow; ai-evals-m09#why-calibration-is-the-whole-game; ai-evals-m09#course-outline; slide-day19-20#s51; ai-evals-m09#when-automation-can-t-reach-the-quality-bar,5.17,3000,298,3298,0.0006288,"{
+  ""scope"": ""in_scope"",
+  ""answer"": ""Calibration (hiệu chỉnh) là một quy trình lặp đi lặp lại nhằm đảm bảo rằng các đánh giá của hệ thống AI phản ánh chính xác quan điểm của các chuyên gia trong lĩnh vực. Nó không chỉ là một phép tính đơn lẻ mà bao gồm các bước như gán nhãn, chạy thử, đo lường và tinh chỉnh để cải thiện độ chính xác của hệ thống."",
+  ""sources"": [
+    {
+      ""doc_id"": ""ai-evals-m09"",
+      ""section_id"": ""lesson-1-the-calibration-workflow"",
+      ""quote"": ""Calibration is not a one-time calculation. It's an iterative loop: label, run, measure, read disagreements, refine the prompt, measure again.""
+    },
+    {
+      ""doc_id"": ""ai-evals-m09"",
+      ""section_id"": ""why-calibration-is-the-whole-game"",
+      ""quote"": ""An uncalibrated judge is worse than no judge.""
+    }
+  ],
+  ""followup_questions"": [
+    ""Tại sao việc hiệu chỉnh lại quan trọng trong đánh giá hệ thống AI?"",
+    ""Có những phương pháp nào để thực hiện hiệu chỉnh cho hệ thống AI?"",
+    ""Làm thế nào để xác định một hệ thống AI đã được hiệu chỉnh tốt hay chưa?""
+  ]
+}"
+G02,giải thích giúp em trace codes với ạ,in_scope,"Trace codes là các nhóm mã hóa được tạo ra từ việc phân tích các mẫu hành vi thành công hoặc thất bại trong quá trình đánh giá. Chúng giúp chuẩn hóa ngôn ngữ trong đội ngũ, đảm bảo mọi người đều hiểu và nói về cùng một vấn đề với cùng một thuật ngữ. Mỗi trace code có tên ngắn gọn, định nghĩa rõ ràng và tiêu chí đánh giá cụ thể.","ai-evals-m04#step-3-cluster-into-trace-codes: ""You now cluster your notes into trace codes: Groups of similar success or failure patterns."" | slide-day19-20#s35: ""Trace codes — ngôn ngữ chung của team""",Trace codes có thể được áp dụng như thế nào trong các dự án AI cụ thể? | Có những ví dụ nào khác về trace codes trong các lĩnh vực khác không? | Tại sao việc chuẩn hóa ngôn ngữ trong đội ngũ lại quan trọng trong đánh giá AI?,5,ai-evals-m04#step-3-cluster-into-trace-codes; slide-day19-20#s35; ai-evals-m04#course-outline; ai-evals-m04#lesson-2-the-trace-analysis-workflow-generating-codes; slide-day19-20#s65,5.02,3548,295,3843,0.0007092,"{
+  ""scope"": ""in_scope"",
+  ""answer"": ""Trace codes là các nhóm mã hóa được tạo ra từ việc phân tích các mẫu hành vi thành công hoặc thất bại trong quá trình đánh giá. Chúng giúp chuẩn hóa ngôn ngữ trong đội ngũ, đảm bảo mọi người đều hiểu và nói về cùng một vấn đề với cùng một thuật ngữ. Mỗi trace code có tên ngắn gọn, định nghĩa rõ ràng và tiêu chí đánh giá cụ thể."",
+  ""sources"": [
+    {
+      ""doc_id"": ""ai-evals-m04"",
+      ""section_id"": ""step-3-cluster-into-trace-codes"",
+      ""quote"": ""You now cluster your notes into trace codes: Groups of similar success or failure patterns.""
+    },
+    {
+      ""doc_id"": ""slide-day19-20"",
+      ""section_id"": ""s35"",
+      ""quote"": ""Trace codes — ngôn ngữ chung của team""
+    }
+  ],
+  ""followup_questions"": [
+    ""Trace codes có thể được áp dụng như thế nào trong các dự án AI cụ thể?"",
+    ""Có những ví dụ nào khác về trace codes trong các lĩnh vực khác không?"",
+    ""Tại sao việc chuẩn hóa ngôn ngữ trong đội ngũ lại quan trọng trong đánh giá AI?""
+  ]
+}"
+G03,Code-based eval khác LLM-as-a-judge chỗ nào vậy ạ? Khi nào trong pipeline nên dùng code-based hơn?,in_scope,"Sự khác biệt giữa đánh giá code-based và LLM-as-Judge nằm ở cách thức và mục đích sử dụng. Đánh giá code-based là phương pháp nhanh, rẻ và có thể tái lập 100%, thích hợp cho các kiểm tra có quy tắc rõ ràng. Ngược lại, LLM-as-Judge được sử dụng khi cần đánh giá các tiêu chí chủ quan như sắc thái ngôn ngữ hay ngữ cảnh mà không thể viết thành quy tắc rõ ràng. Bạn nên ưu tiên sử dụng code-based khi có thể kiểm tra bằng code, và chỉ chuyển sang LLM khi cần đánh giá các yếu tố chủ quan.","ai-evals-m05#choosing-the-automation-method-code-based-vs-llm-as-judge: ""The default path should always be code-based evaluation because it's faster, cheaper, and 100% reproducible (deterministic)."" | slide-day19-20#s40: ""Nếu có thể kiểm tra bằng code — hãy dùng code trước."" | ai-evals-m05#key-takeaways-and-definitions: ""Only use the llm-as-judge approach when a metric requires subjective nuance.""",Bạn có thể nêu ví dụ cụ thể về khi nào nên sử dụng LLM-as-Judge không? | Có những tiêu chí nào thường được đánh giá bằng LLM-as-Judge? | Làm thế nào để xác định được khoảng cách tổng quát cần tự động hóa trong quy trình đánh giá?,10,ai-evals-m05#choosing-the-automation-method-code-based-vs-llm-as-judge; slide-day19-20#s37; slide-day19-20#s40; ai-evals-m07#key-takeaways-and-definitions; ai-evals-m07#reference-free-vs-reference-based-judges; ai-evals-m05#key-takeaways-and-definitions; anthropic-demystifying-evals#computer-use-agents; ai-evals-m05#choosing-the-automation-method-code-based-vs-llm-as-judge; ai-evals-m11#key-takeaways-and-definitions; ai-evals-m06#lesson-1-writing-and-scaling-code-based-evals,6.86,5608,457,6065,0.0011154,"{
+  ""scope"": ""in_scope"",
+  ""answer"": ""Sự khác biệt giữa đánh giá code-based và LLM-as-Judge nằm ở cách thức và mục đích sử dụng. Đánh giá code-based là phương pháp nhanh, rẻ và có thể tái lập 100%, thích hợp cho các kiểm tra có quy tắc rõ ràng. Ngược lại, LLM-as-Judge được sử dụng khi cần đánh giá các tiêu chí chủ quan như sắc thái ngôn ngữ hay ngữ cảnh mà không thể viết thành quy tắc rõ ràng. Bạn nên ưu tiên sử dụng code-based khi có thể kiểm tra bằng code, và chỉ chuyển sang LLM khi cần đánh giá các yếu tố chủ quan."",
+  ""sources"": [
+    {
+      ""doc_id"": ""ai-evals-m05"",
+      ""section_id"": ""choosing-the-automation-method-code-based-vs-llm-as-judge"",
+      ""quote"": ""The default path should always be code-based evaluation because it's faster, cheaper, and 100% reproducible (deterministic).""
+    },
+    {
+      ""doc_id"": ""slide-day19-20"",
+      ""section_id"": ""s40"",
+      ""quote"": ""Nếu có thể kiểm tra bằng code — hãy dùng code trước.""
+    },
+    {
+      ""doc_id"": ""ai-evals-m05"",
+      ""section_id"": ""key-takeaways-and-definitions"",
+      ""quote"": ""Only use the llm-as-judge approach when a metric requires subjective nuance.""
+    }
+  ],
+  ""followup_questions"": [
+    ""Bạn có thể nêu ví dụ cụ thể về khi nào nên sử dụng LLM-as-Judge không?"",
+    ""Có những tiêu chí nào thường được đánh giá bằng LLM-as-Judge?"",
+    ""Làm thế nào để xác định được khoảng cách tổng quát cần tự động hóa trong quy trình đánh giá?""
+  ]
+}"
+G04,Cho mình hỏi offline eval với online monitoring khác nhau gì và thời điểm nào thì bắt đầu triển khai online monitoring?,in_scope,"Offline evals và online monitoring có sự khác biệt rõ rệt. Offline evals chỉ kiểm tra những gì bạn đã biết để tìm kiếm, trong khi online monitoring theo dõi hiệu suất thực tế trong thời gian thực, giúp phát hiện các vấn đề mới mà bạn chưa lường trước. Bạn nên triển khai online monitoring ngay khi sản phẩm của bạn có lưu lượng truy cập thực tế để theo dõi và điều chỉnh kịp thời.","ai-evals-m11#key-takeaways-and-definitions: ""Offline evals test what you know. Online monitoring reveals what you don't."" | ai-evals-m02#lesson-4-stage-3-user-monitoring-optimize: ""Online monitoring is real-time tracking of production performance, including A/B testing."" | ai-evals-m05#starting-small-scaling-deliberately: ""Online monitoring becomes critical once you have production traffic.""",Bạn có thể nêu ví dụ về các chỉ số nào nên theo dõi trong online monitoring không? | Khi nào thì bạn nên cập nhật dataset dựa trên kết quả từ online monitoring? | Sự khác biệt giữa offline evals và online monitoring có ảnh hưởng như thế nào đến quy trình phát triển sản phẩm của bạn?,10,ai-evals-m02#lesson-4-stage-3-user-monitoring-optimize; ai-evals-m11#key-takeaways-and-definitions; ai-evals-m11#case-study-online-monitoring-for-the-support-triage-agent; ai-evals-m11#intro; anthropic-demystifying-evals#appendix-eval-frameworks; ai-evals-m02#lesson-4-stage-3-user-monitoring-optimize; ai-evals-m11#case-study-online-monitoring-for-the-support-triage-agent; ai-evals-m11#key-takeaways-and-definitions; ai-evals-m11#intro; ai-evals-m05#starting-small-scaling-deliberately,5.94,5682,394,6076,0.0010887,"{
+  ""scope"": ""in_scope"",
+  ""answer"": ""Offline evals và online monitoring có sự khác biệt rõ rệt. Offline evals chỉ kiểm tra những gì bạn đã biết để tìm kiếm, trong khi online monitoring theo dõi hiệu suất thực tế trong thời gian thực, giúp phát hiện các vấn đề mới mà bạn chưa lường trước. Bạn nên triển khai online monitoring ngay khi sản phẩm của bạn có lưu lượng truy cập thực tế để theo dõi và điều chỉnh kịp thời."",
+  ""sources"": [
+    {
+      ""doc_id"": ""ai-evals-m11"",
+      ""section_id"": ""key-takeaways-and-definitions"",
+      ""quote"": ""Offline evals test what you know. Online monitoring reveals what you don't.""
+    },
+    {
+      ""doc_id"": ""ai-evals-m02"",
+      ""section_id"": ""lesson-4-stage-3-user-monitoring-optimize"",
+      ""quote"": ""Online monitoring is real-time tracking of production performance, including A/B testing.""
+    },
+    {
+      ""doc_id"": ""ai-evals-m05"",
+      ""section_id"": ""starting-small-scaling-deliberately"",
+      ""quote"": ""Online monitoring becomes critical once you have production traffic.""
+    }
+  ],
+  ""followup_questions"": [
+    ""Bạn có thể nêu ví dụ về các chỉ số nào nên theo dõi trong online monitoring không?"",
+    ""Khi nào thì bạn nên cập nhật dataset dựa trên kết quả từ online monitoring?"",
+    ""Sự khác biệt giữa offline evals và online monitoring có ảnh hưởng như thế nào đến quy trình phát triển sản phẩm của bạn?""
+  ]
+}"
+G05,Cái chấm bằng máy với đợt trước xem trace tay ấy nó khác gì nhau ko nhỉ?,in_scope,"Chấm bằng máy (judge) và xem trace tay (trace) có sự khác biệt rõ ràng. Trace là bản ghi đầy đủ của một yêu cầu AI, bao gồm tất cả các đầu vào và đầu ra, trong khi judge là phương pháp đánh giá dựa trên các tiêu chí cụ thể. Chấm bằng máy thường nhanh hơn và có thể tự động hóa, trong khi xem trace tay yêu cầu sự can thiệp của con người để đánh giá các yếu tố chủ quan như cảm xúc hay ngữ cảnh.","ai-evals-m04#lesson-1-what-is-a-trace: ""Trace — A trace is the complete record of everything that happened inside a single AI request."" | ai-evals-m05#choosing-the-automation-method-code-based-vs-llm-as-judge: ""When your trace categories depend on subjective judgment rather than strict rules, LLM-based evaluators or LLM-Judges are helpful.""",Bạn có thể nêu ví dụ về khi nào nên sử dụng trace thay vì judge không? | Sự khác biệt giữa chấm bằng máy và chấm tay có ảnh hưởng như thế nào đến độ tin cậy của kết quả đánh giá? | Khi nào thì việc sử dụng judge là cần thiết trong quy trình đánh giá AI?,15,ai-evals-m09#calibration-the-confusion-matrix-method; slide-day19-20#s65; ai-evals-m05#choosing-the-automation-method-code-based-vs-llm-as-judge; ai-evals-m07#key-takeaways-and-definitions; slide-day19-20#s37; ai-evals-m04#course-outline; ai-evals-m08#what-to-label; ai-evals-m04#lesson-1-what-is-a-trace; ai-evals-m14#step-2-start-with-a-minimal-prototype; ai-evals-m14#patterns-from-the-field; ai-evals-m09#the-confusion-matrix; ai-evals-m09#why-calibration-is-the-whole-game; ai-evals-m07#what-an-llm-judge-looks-like; ai-evals-m09#case-study-calibrating-the-empathy-judge; slide-day19-20#s53,6.58,7311,400,7711,0.00133665,"{
+  ""scope"": ""in_scope"",
+  ""answer"": ""Chấm bằng máy (judge) và xem trace tay (trace) có sự khác biệt rõ ràng. Trace là bản ghi đầy đủ của một yêu cầu AI, bao gồm tất cả các đầu vào và đầu ra, trong khi judge là phương pháp đánh giá dựa trên các tiêu chí cụ thể. Chấm bằng máy thường nhanh hơn và có thể tự động hóa, trong khi xem trace tay yêu cầu sự can thiệp của con người để đánh giá các yếu tố chủ quan như cảm xúc hay ngữ cảnh."",
+  ""sources"": [
+    {
+      ""doc_id"": ""ai-evals-m04"",
+      ""section_id"": ""lesson-1-what-is-a-trace"",
+      ""quote"": ""Trace — A trace is the complete record of everything that happened inside a single AI request.""
+    },
+    {
+      ""doc_id"": ""ai-evals-m05"",
+      ""section_id"": ""choosing-the-automation-method-code-based-vs-llm-as-judge"",
+      ""quote"": ""When your trace categories depend on subjective judgment rather than strict rules, LLM-based evaluators or LLM-Judges are helpful.""
+    }
+  ],
+  ""followup_questions"": [
+    ""Bạn có thể nêu ví dụ về khi nào nên sử dụng trace thay vì judge không?"",
+    ""Sự khác biệt giữa chấm bằng máy và chấm tay có ảnh hưởng như thế nào đến độ tin cậy của kết quả đánh giá?"",
+    ""Khi nào thì việc sử dụng judge là cần thiết trong quy trình đánh giá AI?""
+  ]
+}"
+G06,Bài tập 2 em dùng LLM judge chấm thay 100% cho người chấm tay thì độ chính xác luôn đảm bảo 100% đúng không ạ?,in_scope,"Không, độ chính xác không đảm bảo 100% khi sử dụng LLM judge thay cho người chấm tay. LLM có thể có những giới hạn và không nhất thiết phải đánh giá giống như con người. Việc không hiệu chỉnh (calibration) cho LLM có thể dẫn đến những sai lệch trong đánh giá, như tỷ lệ đúng sai không phản ánh chính xác chất lượng thực tế của đầu ra.","anthropic-demystifying-evals#design-the-eval-harness-and-graders: ""Model grading often takes careful iteration to validate accuracy. LLM-as-judge graders should be closely calibrated with human experts to gain confidence that there is little divergence between the human grading and model grading."" | ai-evals-m09#why-calibration-is-the-whole-game: ""An uncalibrated judge is worse than no judge.""","Tại sao việc hiệu chỉnh (calibration) cho LLM judge lại quan trọng? | Có những phương pháp nào để cải thiện độ chính xác của LLM judge? | So sánh giữa LLM judge và người chấm tay, điểm mạnh và điểm yếu của mỗi phương pháp là gì?",5,anthropic-demystifying-evals#design-the-eval-harness-and-graders; ai-evals-m05#not-every-problem-needs-an-eval; ai-evals-m09#the-confusion-matrix; ai-evals-m09#why-calibration-is-the-whole-game; ai-evals-m07#what-an-llm-judge-looks-like,8.32,4699,325,5024,0.00089985,"{
+  ""scope"": ""in_scope"",
+  ""answer"": ""Không, độ chính xác không đảm bảo 100% khi sử dụng LLM judge thay cho người chấm tay. LLM có thể có những giới hạn và không nhất thiết phải đánh giá giống như con người. Việc không hiệu chỉnh (calibration) cho LLM có thể dẫn đến những sai lệch trong đánh giá, như tỷ lệ đúng sai không phản ánh chính xác chất lượng thực tế của đầu ra."",
+  ""sources"": [
+    {
+      ""doc_id"": ""anthropic-demystifying-evals"",
+      ""section_id"": ""design-the-eval-harness-and-graders"",
+      ""quote"": ""Model grading often takes careful iteration to validate accuracy. LLM-as-judge graders should be closely calibrated with human experts to gain confidence that there is little divergence between the human grading and model grading.""
+    },
+    {
+      ""doc_id"": ""ai-evals-m09"",
+      ""section_id"": ""why-calibration-is-the-whole-game"",
+      ""quote"": ""An uncalibrated judge is worse than no judge.""
+    }
+  ],
+  ""followup_questions"": [
+    ""Tại sao việc hiệu chỉnh (calibration) cho LLM judge lại quan trọng?"",
+    ""Có những phương pháp nào để cải thiện độ chính xác của LLM judge?"",
+    ""So sánh giữa LLM judge và người chấm tay, điểm mạnh và điểm yếu của mỗi phương pháp là gì?""
+  ]
+}"
+G07,"Trong bài thực hành lấy synthetic data, em chỉ cần dùng GPT-4 prompt tạo 1000 test cases là có golden dataset chuẩn xịn để test agent luôn đúng ko?",in_scope,"Việc chỉ sử dụng 1000 test cases được tạo ra từ GPT-4 không đảm bảo rằng bạn có một golden dataset chất lượng cao. Dataset có thể có nhiều rows nhưng không chắc chắn có coverage tốt, nghĩa là nó có thể thiếu các trường hợp quan trọng như edge cases hay các tình huống không phổ biến. Để có một dataset thực sự hiệu quả, bạn cần đảm bảo rằng nó phản ánh đúng sự đa dạng và độ khó của dữ liệu trong thực tế.","slide-day19-20#s25: ""Dataset nhiều rows chưa chắc có coverage tốt.""",Tại sao việc đảm bảo coverage trong dataset lại quan trọng? | Có những phương pháp nào để cải thiện coverage của dataset? | Làm thế nào để xác định các trường hợp edge cases trong dataset của bạn?,5,slide-day19-20#s25; ai-evals-m10#when-to-update-the-dataset; ai-evals-m08#balancing-the-dataset; slide-day19-20#s02; ai-evals-m08#smart-sampling-strategies,6.96,3434,234,3668,0.0006555,"{
+  ""scope"": ""in_scope"",
+  ""answer"": ""Việc chỉ sử dụng 1000 test cases được tạo ra từ GPT-4 không đảm bảo rằng bạn có một golden dataset chất lượng cao. Dataset có thể có nhiều rows nhưng không chắc chắn có coverage tốt, nghĩa là nó có thể thiếu các trường hợp quan trọng như edge cases hay các tình huống không phổ biến. Để có một dataset thực sự hiệu quả, bạn cần đảm bảo rằng nó phản ánh đúng sự đa dạng và độ khó của dữ liệu trong thực tế."",
+  ""sources"": [
+    {
+      ""doc_id"": ""slide-day19-20"",
+      ""section_id"": ""s25"",
+      ""quote"": ""Dataset nhiều rows chưa chắc có coverage tốt.""
+    }
+  ],
+  ""followup_questions"": [
+    ""Tại sao việc đảm bảo coverage trong dataset lại quan trọng?"",
+    ""Có những phương pháp nào để cải thiện coverage của dataset?"",
+    ""Làm thế nào để xác định các trường hợp edge cases trong dataset của bạn?""
+  ]
+}"
+G08,"Giải thích nhanh giúp em thuật toán Backpropagation qua thời gian (BPTT) trong RNN với, em cần hiểu gấp!",out_of_scope,"Xin lỗi, nhưng hiện tại tôi không có thông tin cụ thể về thuật toán Backpropagation Through Time (BPTT) trong RNN trong tài liệu mà tôi có. Tuy nhiên, bạn có thể tìm hiểu thêm về các phương pháp đánh giá hệ thống AI hoặc các khái niệm liên quan đến mạng nơ-ron trong các tài liệu khác. Nếu bạn cần, tôi có thể giúp bạn với các chủ đề như đánh giá AI hoặc các loại mô hình AI.",,BPTT có vai trò gì trong việc cải thiện hiệu suất của RNN? | Có những phương pháp nào khác để huấn luyện RNN ngoài BPTT? | Tại sao việc đánh giá hiệu suất của RNN lại quan trọng trong phát triển AI?,15,ai-evals-m09#the-confusion-matrix; ai-evals-m01#lesson-1-the-ai-flywheel; anthropic-demystifying-evals#evaluating-conversational-agents; ai-evals-m04#step-2-review-outputs-free-form; ai-evals-m04#example-1-ai-slide-tool; ai-evals-m09#the-confusion-matrix; ai-evals-m01#lesson-1-the-ai-flywheel; anthropic-demystifying-evals#evaluating-conversational-agents; ai-evals-m04#step-2-review-outputs-free-form; ai-evals-m04#example-1-ai-slide-tool; ai-evals-m09#the-confusion-matrix; ai-evals-m01#lesson-1-the-ai-flywheel; anthropic-demystifying-evals#evaluating-conversational-agents; ai-evals-m04#step-2-review-outputs-free-form; ai-evals-m04#example-1-ai-slide-tool,14.3,41772,272,42044,0.006429,"{
+  ""scope"": ""out_of_scope"",
+  ""answer"": ""Xin lỗi, nhưng hiện tại tôi không có thông tin cụ thể về thuật toán Backpropagation Through Time (BPTT) trong RNN trong tài liệu mà tôi có. Tuy nhiên, bạn có thể tìm hiểu thêm về các phương pháp đánh giá hệ thống AI hoặc các khái niệm liên quan đến mạng nơ-ron trong các tài liệu khác. Nếu bạn cần, tôi có thể giúp bạn với các chủ đề như đánh giá AI hoặc các loại mô hình AI."",
+  ""sources"": [],
+  ""followup_questions"": [
+    ""BPTT có vai trò gì trong việc cải thiện hiệu suất của RNN?"",
+    ""Có những phương pháp nào khác để huấn luyện RNN ngoài BPTT?"",
+    ""Tại sao việc đánh giá hiệu suất của RNN lại quan trọng trong phát triển AI?""
+  ]
+}"
+G09,"Tóm tắt gấp kiến thức về Zero-Knowledge Proof trong Web3 giúp mình với, đang cần gấp.",out_of_scope,"Xin lỗi, nhưng tôi không có thông tin về Zero-Knowledge Proof trong Web3 trong tài liệu hiện có. Tuy nhiên, bạn có thể tìm hiểu về các phương pháp đánh giá hệ thống AI hoặc các tiêu chí đánh giá trong AI, những chủ đề này có thể hữu ích cho bạn.",,Zero-Knowledge Proof có thể được áp dụng như thế nào trong việc bảo mật dữ liệu AI? | Có những phương pháp đánh giá nào khác trong AI mà bạn thấy thú vị không? | Bạn có thể so sánh Zero-Knowledge Proof với các phương pháp bảo mật khác trong AI không?,10,anthropic-demystifying-evals#going-from-zero-to-one-a-roadmap-to-great-evals-for-agents; ai-evals-m03#evaluation-rubric; slide-day19-20#s25; ai-evals-m08#how-many-traces-you-need-and-when; slide-day19-20#s30; anthropic-demystifying-evals#going-from-zero-to-one-a-roadmap-to-great-evals-for-agents; ai-evals-m03#evaluation-rubric; slide-day19-20#s25; ai-evals-m08#how-many-traces-you-need-and-when; slide-day19-20#s30,8.6,6919,198,7117,0.00115665,"{
+  ""scope"": ""out_of_scope"",
+  ""answer"": ""Xin lỗi, nhưng tôi không có thông tin về Zero-Knowledge Proof trong Web3 trong tài liệu hiện có. Tuy nhiên, bạn có thể tìm hiểu về các phương pháp đánh giá hệ thống AI hoặc các tiêu chí đánh giá trong AI, những chủ đề này có thể hữu ích cho bạn."",
+  ""sources"": [],
+  ""followup_questions"": [
+    ""Zero-Knowledge Proof có thể được áp dụng như thế nào trong việc bảo mật dữ liệu AI?"",
+    ""Có những phương pháp đánh giá nào khác trong AI mà bạn thấy thú vị không?"",
+    ""Bạn có thể so sánh Zero-Knowledge Proof với các phương pháp bảo mật khác trong AI không?""
+  ]
+}"
+G10,Em đang làm lab Module 6: làm sao để viết regex bắt output JSON hợp lệ của LLM và nếu output bị dính markdown block ```json thì xử lý parse như thế nào?,in_scope,"Để viết regex cho output JSON hợp lệ của LLM, bạn cần xác định cấu trúc JSON mà bạn muốn kiểm tra. Sử dụng thư viện xác thực schema có thể giúp bạn kiểm tra các trường bắt buộc và định dạng. Nếu output bị dính markdown block ```json, bạn có thể loại bỏ phần này trước khi phân tích cú pháp JSON. Ví dụ, bạn có thể sử dụng regex để tìm và loại bỏ các ký tự không cần thiết trước khi phân tích cú pháp.","ai-evals-m06#structure-and-format: ""AI outputs are often required to conform to a schema: JSON with specific fields, a response that includes required sections, and a character count under a UI limit."" | ai-evals-m06#what-code-based-evals-look-like: ""A condition, a pattern match, a schema validation, a count, a threshold comparison."" | ai-evals-m04#example-2-customer-support-agent: ""Below is a simplified JSON representation of an LLM Trace.""",Bạn có thể mô tả cách sử dụng thư viện xác thực schema trong Python không? | Làm thế nào để kiểm tra các trường bắt buộc trong một JSON response? | Có những cách nào khác để xử lý output JSON không hợp lệ từ LLM?,10,ai-evals-m06#structure-and-format; ai-evals-m06#what-code-based-evals-look-like; slide-day19-20#s43; ai-evals-m12#case-study-evaluating-a-text-to-sql-analytics-agent; ai-evals-m04#example-2-customer-support-agent; ai-evals-m14#step-2-start-with-a-minimal-prototype; hamel-evals#data-synthesis-curation; chip-huyen-ch4#instruction-following-capability; ai-evals-m06#structure-and-format; ai-evals-m04#example-2-customer-support-agent,7.76,7385,406,7791,0.00135135,"{
+  ""scope"": ""in_scope"",
+  ""answer"": ""Để viết regex cho output JSON hợp lệ của LLM, bạn cần xác định cấu trúc JSON mà bạn muốn kiểm tra. Sử dụng thư viện xác thực schema có thể giúp bạn kiểm tra các trường bắt buộc và định dạng. Nếu output bị dính markdown block ```json, bạn có thể loại bỏ phần này trước khi phân tích cú pháp JSON. Ví dụ, bạn có thể sử dụng regex để tìm và loại bỏ các ký tự không cần thiết trước khi phân tích cú pháp."",
+  ""sources"": [
+    {
+      ""doc_id"": ""ai-evals-m06"",
+      ""section_id"": ""structure-and-format"",
+      ""quote"": ""AI outputs are often required to conform to a schema: JSON with specific fields, a response that includes required sections, and a character count under a UI limit.""
+    },
+    {
+      ""doc_id"": ""ai-evals-m06"",
+      ""section_id"": ""what-code-based-evals-look-like"",
+      ""quote"": ""A condition, a pattern match, a schema validation, a count, a threshold comparison.""
+    },
+    {
+      ""doc_id"": ""ai-evals-m04"",
+      ""section_id"": ""example-2-customer-support-agent"",
+      ""quote"": ""Below is a simplified JSON representation of an LLM Trace.""
+    }
+  ],
+  ""followup_questions"": [
+    ""Bạn có thể mô tả cách sử dụng thư viện xác thực schema trong Python không?"",
+    ""Làm thế nào để kiểm tra các trường bắt buộc trong một JSON response?"",
+    ""Có những cách nào khác để xử lý output JSON không hợp lệ từ LLM?""
+  ]
+}"
+G11,"Chỉ em cách setup Cohen's Kappa để đo alignment giữa human với judge trong bài 9, xong rồi nếu Kappa < 0.6 thì phải sửa prompt của judge theo các bước nào tiếp theo?",in_scope,"Để thiết lập Cohen's Kappa, bạn cần thu thập các đánh giá từ cả người đánh giá (judge) và con người (human) về cùng một tập dữ liệu. Sau đó, tính toán Kappa để đo lường mức độ đồng thuận giữa hai nhóm. Nếu Kappa < 0.6, bạn nên thực hiện các bước sau: 1) Đọc lại các trường hợp không đồng thuận để xác định nguyên nhân; 2) Cập nhật prompt của judge để cải thiện độ chính xác; 3) Thực hiện các vòng lặp hiệu chỉnh để đo lường lại và điều chỉnh cho đến khi đạt được kết quả mong muốn.","slide-day19-20#s55: ""κ (kappa): 0 = ngang đoán bừa · 1 = khớp tuyệt đối."" | ai-evals-m09#lesson-1-the-calibration-workflow: ""Calibration is not a one-time calculation. It's an iterative loop: label, run, measure, read disagreements, refine the prompt, measure again.""",Bạn có thể giải thích thêm về cách tính toán Cohen's Kappa không? | Có những phương pháp nào khác để đánh giá độ chính xác của judge? | Tại sao việc hiệu chỉnh prompt lại quan trọng trong quy trình đánh giá AI?,10,slide-day19-20#s55; ai-evals-m11#case-study-online-monitoring-for-the-support-triage-agent; slide-day19-20#s07; ai-evals-m14#step-3-iterate-based-on-usage; ai-evals-m07#example-1-tone-check-for-support-triage; ai-evals-m09#case-study-calibrating-the-empathy-judge; ai-evals-m09#lesson-1-the-calibration-workflow; ai-evals-m13#reading-the-funnel; ai-evals-m09#why-calibration-is-the-whole-game; ai-evals-m09#course-outline,6.23,5202,395,5597,0.0010173,"{
+  ""scope"": ""in_scope"",
+  ""answer"": ""Để thiết lập Cohen's Kappa, bạn cần thu thập các đánh giá từ cả người đánh giá (judge) và con người (human) về cùng một tập dữ liệu. Sau đó, tính toán Kappa để đo lường mức độ đồng thuận giữa hai nhóm. Nếu Kappa < 0.6, bạn nên thực hiện các bước sau: 1) Đọc lại các trường hợp không đồng thuận để xác định nguyên nhân; 2) Cập nhật prompt của judge để cải thiện độ chính xác; 3) Thực hiện các vòng lặp hiệu chỉnh để đo lường lại và điều chỉnh cho đến khi đạt được kết quả mong muốn."",
+  ""sources"": [
+    {
+      ""doc_id"": ""slide-day19-20"",
+      ""section_id"": ""s55"",
+      ""quote"": ""κ (kappa): 0 = ngang đoán bừa · 1 = khớp tuyệt đối.""
+    },
+    {
+      ""doc_id"": ""ai-evals-m09"",
+      ""section_id"": ""lesson-1-the-calibration-workflow"",
+      ""quote"": ""Calibration is not a one-time calculation. It's an iterative loop: label, run, measure, read disagreements, refine the prompt, measure again.""
+    }
+  ],
+  ""followup_questions"": [
+    ""Bạn có thể giải thích thêm về cách tính toán Cohen's Kappa không?"",
+    ""Có những phương pháp nào khác để đánh giá độ chính xác của judge?"",
+    ""Tại sao việc hiệu chỉnh prompt lại quan trọng trong quy trình đánh giá AI?""
+  ]
+}"
+G12,"Anh ơi còn 10 phút nữa hết hạn nộp lab Module 7 rồi, cho em xin luôn cái prompt chuẩn của con judge phân loại hallucination đi ạ 😭 gấp lắm rồi!",in_scope,"Để thiết kế prompt cho judge phân loại hallucination, bạn cần đảm bảo rằng nó có cấu trúc rõ ràng và bao gồm các yếu tố như vai trò của judge, câu hỏi đánh giá duy nhất, tiêu chuẩn cụ thể, ví dụ minh họa và yêu cầu phản hồi theo định dạng nhất định. Ví dụ, một prompt có thể yêu cầu judge kiểm tra xem có ID vé nào được tạo ra không có trong đầu vào hay không.","ai-evals-m07#optimizing-the-judge-prompt: ""A judge prompt needs more structure than a typical agent prompt to reduce ambiguity."" | ai-evals-m06#case-study-3-code-evals-for-the-support-triage-agent: ""Eval 2: Hallucination guard — no invented ticket IDs.""",Bạn có thể giải thích thêm về cách thiết kế rubric cho các loại đánh giá khác không? | Có những yếu tố nào khác cần xem xét khi đánh giá hiệu suất của agent? | Làm thế nào để xác định các tiêu chí đánh giá cho một tình huống cụ thể?,10,anthropic-demystifying-evals#types-of-graders-for-agents; ai-evals-m03#evaluation-rubric; ai-evals-m07#course-outline; slide-day19-20#s34; ai-evals-m08#governance-policies; ai-evals-m06#case-study-3-code-evals-for-the-support-triage-agent; ai-evals-m06#running-code-evals-across-a-dataset; ai-evals-m08#why-splits-matter-contamination-risk; ai-evals-m07#optimizing-the-judge-prompt; ai-evals-m07#what-an-llm-judge-looks-like,7.35,8650,328,8978,0.0014943,"{
+  ""scope"": ""in_scope"",
+  ""answer"": ""Để thiết kế prompt cho judge phân loại hallucination, bạn cần đảm bảo rằng nó có cấu trúc rõ ràng và bao gồm các yếu tố như vai trò của judge, câu hỏi đánh giá duy nhất, tiêu chuẩn cụ thể, ví dụ minh họa và yêu cầu phản hồi theo định dạng nhất định. Ví dụ, một prompt có thể yêu cầu judge kiểm tra xem có ID vé nào được tạo ra không có trong đầu vào hay không."",
+  ""sources"": [
+    {
+      ""doc_id"": ""ai-evals-m07"",
+      ""section_id"": ""optimizing-the-judge-prompt"",
+      ""quote"": ""A judge prompt needs more structure than a typical agent prompt to reduce ambiguity.""
+    },
+    {
+      ""doc_id"": ""ai-evals-m06"",
+      ""section_id"": ""case-study-3-code-evals-for-the-support-triage-agent"",
+      ""quote"": ""Eval 2: Hallucination guard — no invented ticket IDs.""
+    }
+  ],
+  ""followup_questions"": [
+    ""Bạn có thể giải thích thêm về cách thiết kế rubric cho các loại đánh giá khác không?"",
+    ""Có những yếu tố nào khác cần xem xét khi đánh giá hiệu suất của agent?"",
+    ""Làm thế nào để xác định các tiêu chí đánh giá cho một tình huống cụ thể?""
+  ]
+}"
+G13,"Em fix test case số 4 mãi không qua, cho em xin code giải hàm test_eval_assertion.py luôn với ạ, deadline dí sát đít rồi bot ơi 😢",in_scope,"Code assertions trong kiểm tra AI là các khẳng định mà bạn viết để kiểm tra tính đúng đắn của mô hình, tương tự như trong pytest. Chúng giúp tổ chức các kiểm tra cho nhiều tình huống khác nhau, không chỉ trong unit tests mà còn trong các quy trình khác như làm sạch dữ liệu và tự động thử lại trong quá trình suy diễn mô hình.","hamel-evals#level-1-unit-tests: ""Unit tests for LLMs are assertions (like you would write in pytest).""",Bạn có thể giải thích thêm về cách tạo test cases cho các assertions không? | Có những loại assertions nào khác mà bạn có thể sử dụng trong kiểm tra AI? | Làm thế nào để cải thiện độ chính xác của các assertions trong quá trình phát triển sản phẩm AI?,5,hamel-evals#level-1-unit-tests; hamel-evals#step-2-create-test-cases; hamel-evals#data-synthesis-curation; ai-evals-m04#step-3-cluster-into-trace-codes; hamel-evals#debugging,7.3,4114,235,4349,0.0007581,"{
+  ""scope"": ""in_scope"",
+  ""answer"": ""Code assertions trong kiểm tra AI là các khẳng định mà bạn viết để kiểm tra tính đúng đắn của mô hình, tương tự như trong pytest. Chúng giúp tổ chức các kiểm tra cho nhiều tình huống khác nhau, không chỉ trong unit tests mà còn trong các quy trình khác như làm sạch dữ liệu và tự động thử lại trong quá trình suy diễn mô hình."",
+  ""sources"": [
+    {
+      ""doc_id"": ""hamel-evals"",
+      ""section_id"": ""level-1-unit-tests"",
+      ""quote"": ""Unit tests for LLMs are assertions (like you would write in pytest).""
+    }
+  ],
+  ""followup_questions"": [
+    ""Bạn có thể giải thích thêm về cách tạo test cases cho các assertions không?"",
+    ""Có những loại assertions nào khác mà bạn có thể sử dụng trong kiểm tra AI?"",
+    ""Làm thế nào để cải thiện độ chính xác của các assertions trong quá trình phát triển sản phẩm AI?""
+  ]
+}"
+G14,"Khóa mình có dạy cách fine-tune mô hình LLaMA 3 bằng LoRA trên GPU cá nhân ở bài mấy thế bot, chỉ em cách làm luôn với?",out_of_scope,"Xin lỗi, nhưng trong corpus không có thông tin cụ thể về cách fine-tune mô hình LLaMA 3 bằng LoRA trên GPU cá nhân. Tuy nhiên, bạn có thể tham khảo các khái niệm về fine-tuning và cách xây dựng hệ thống đánh giá AI trong các tài liệu liên quan. Nếu bạn cần, tôi có thể giúp bạn tìm hiểu thêm về các phương pháp fine-tuning hoặc cách thiết lập hệ thống đánh giá cho AI.",,Bạn có biết fine-tuning là gì và tại sao nó quan trọng trong phát triển AI không? | Có những phương pháp nào khác ngoài LoRA để fine-tune mô hình AI? | Bạn có muốn tìm hiểu về cách xây dựng hệ thống đánh giá cho mô hình AI không?,15,hamel-evals#eval-systems-unlock-superpowers-for-free; hamel-evals#footnotes; chip-huyen-ch4#safety; hamel-evals#fine-tuning; hamel-evals#iterating-quickly-success; hamel-evals#eval-systems-unlock-superpowers-for-free; hamel-evals#footnotes; chip-huyen-ch4#safety; hamel-evals#fine-tuning; hamel-evals#iterating-quickly-success; hamel-evals#fine-tuning; hamel-evals#footnotes; hamel-evals#data-synthesis-curation; hamel-evals#iterating-quickly-success; slide-day19-20#s11,10.73,13497,256,13753,0.00217815,"{
+  ""scope"": ""out_of_scope"",
+  ""answer"": ""Xin lỗi, nhưng trong corpus không có thông tin cụ thể về cách fine-tune mô hình LLaMA 3 bằng LoRA trên GPU cá nhân. Tuy nhiên, bạn có thể tham khảo các khái niệm về fine-tuning và cách xây dựng hệ thống đánh giá AI trong các tài liệu liên quan. Nếu bạn cần, tôi có thể giúp bạn tìm hiểu thêm về các phương pháp fine-tuning hoặc cách thiết lập hệ thống đánh giá cho AI."",
+  ""sources"": [],
+  ""followup_questions"": [
+    ""Bạn có biết fine-tuning là gì và tại sao nó quan trọng trong phát triển AI không?"",
+    ""Có những phương pháp nào khác ngoài LoRA để fine-tune mô hình AI?"",
+    ""Bạn có muốn tìm hiểu về cách xây dựng hệ thống đánh giá cho mô hình AI không?""
+  ]
+}"
+G15,Phần tích hợp cổng thanh toán VNPay với Stripe cho app AI nằm ở module nào vậy ạ? Giải thích chi tiết cách code cho em.,out_of_scope,"Xin lỗi, nhưng thông tin về việc tích hợp cổng thanh toán VNPay với Stripe không có trong tài liệu mà tôi có. Tuy nhiên, bạn có thể tham khảo các chủ đề liên quan như ""API integration"" hoặc ""payment systems"" trong các module về đánh giá hệ thống AI.",,Bạn có thể giải thích về cách thức hoạt động của API trong việc tích hợp hệ thống không? | Có những thách thức nào khi tích hợp các cổng thanh toán khác nhau vào ứng dụng AI? | Làm thế nào để đánh giá hiệu suất của một hệ thống thanh toán trong ứng dụng AI?,10,anthropic-demystifying-evals#acknowledgements; ai-evals-m14#step-4-connect-to-your-data-sources-for-automation; ai-evals-m11#case-study-online-monitoring-for-the-support-triage-agent; slide-day19-20#s17; ai-evals-m10#you-set-the-priority-engineers-execute-the-fix; ai-evals-m01#reference-datasets-golden-outputs-and-edge-cases; anthropic-demystifying-evals#acknowledgements; ai-evals-m14#step-4-connect-to-your-data-sources-for-automation; ai-evals-m11#case-study-online-monitoring-for-the-support-triage-agent; slide-day19-20#s17,8.07,7362,195,7557,0.0012213,"{
+  ""scope"": ""out_of_scope"",
+  ""answer"": ""Xin lỗi, nhưng thông tin về việc tích hợp cổng thanh toán VNPay với Stripe không có trong tài liệu mà tôi có. Tuy nhiên, bạn có thể tham khảo các chủ đề liên quan như \""API integration\"" hoặc \""payment systems\"" trong các module về đánh giá hệ thống AI."",
+  ""sources"": [],
+  ""followup_questions"": [
+    ""Bạn có thể giải thích về cách thức hoạt động của API trong việc tích hợp hệ thống không?"",
+    ""Có những thách thức nào khi tích hợp các cổng thanh toán khác nhau vào ứng dụng AI?"",
+    ""Làm thế nào để đánh giá hiệu suất của một hệ thống thanh toán trong ứng dụng AI?""
+  ]
+}"
+G16,Dùng LLM Judge chấm theo pairwise so sánh cặp chắc chắn xịn hơn và tiết kiệm hơn chấm điểm đơn single-score rubric đúng ko ạ?,in_scope,"Đúng vậy, việc sử dụng LLM Judge để chấm điểm theo phương pháp so sánh cặp (pairwise comparison) có thể mang lại độ chính xác cao hơn và tiết kiệm hơn so với việc chấm điểm đơn (single-score rubric). Phương pháp này giúp nắm bắt được sự tinh tế trong đánh giá và yêu cầu ít sự can thiệp từ con người hơn.","anthropic-demystifying-evals#types-of-graders-for-agents: ""Pairwise comparison - Captures nuance; Requires calibration with human graders for accuracy."" | ai-evals-m10#a-b-comparison-methodology: ""For every experiment, compare the new version against the current production baseline on the same reference dataset.""",Bạn có thể giải thích thêm về cách thức hoạt động của phương pháp so sánh cặp không? | Có những yếu tố nào cần cân nhắc khi thiết kế rubric cho LLM Judge? | Làm thế nào để đảm bảo độ chính xác của LLM Judge trong các tình huống thực tế?,10,ai-evals-m03#evaluation-rubric; ai-evals-m01#measuring-usage-vs-measuring-work; ai-evals-m09#the-confusion-matrix; ai-evals-m09#why-calibration-is-the-whole-game; ai-evals-m07#what-an-llm-judge-looks-like; anthropic-demystifying-evals#types-of-graders-for-agents; ai-evals-m08#key-takeaways-and-definitions; ai-evals-m07#lesson-1-principles-of-llm-judge-design; ai-evals-m10#a-b-comparison-methodology; ai-evals-m07#what-an-llm-judge-looks-like,6.79,8267,323,8590,0.00143385,"{
+  ""scope"": ""in_scope"",
+  ""answer"": ""Đúng vậy, việc sử dụng LLM Judge để chấm điểm theo phương pháp so sánh cặp (pairwise comparison) có thể mang lại độ chính xác cao hơn và tiết kiệm hơn so với việc chấm điểm đơn (single-score rubric). Phương pháp này giúp nắm bắt được sự tinh tế trong đánh giá và yêu cầu ít sự can thiệp từ con người hơn."",
+  ""sources"": [
+    {
+      ""doc_id"": ""anthropic-demystifying-evals"",
+      ""section_id"": ""types-of-graders-for-agents"",
+      ""quote"": ""Pairwise comparison - Captures nuance; Requires calibration with human graders for accuracy.""
+    },
+    {
+      ""doc_id"": ""ai-evals-m10"",
+      ""section_id"": ""a-b-comparison-methodology"",
+      ""quote"": ""For every experiment, compare the new version against the current production baseline on the same reference dataset.""
+    }
+  ],
+  ""followup_questions"": [
+    ""Bạn có thể giải thích thêm về cách thức hoạt động của phương pháp so sánh cặp không?"",
+    ""Có những yếu tố nào cần cân nhắc khi thiết kế rubric cho LLM Judge?"",
+    ""Làm thế nào để đảm bảo độ chính xác của LLM Judge trong các tình huống thực tế?""
+  ]
+}"
+G17,G-Eval xài chain-of-thought auto generate rubric lúc nào cũng chuẩn hơn rubric do con người tự viết tay đúng không bot?,out_of_scope,"Câu hỏi của bạn về việc G-Eval sử dụng chain-of-thought auto generate rubric có thể không được trả lời trực tiếp trong tài liệu hiện có. Tuy nhiên, bạn có thể tìm hiểu thêm về cách xây dựng rubric và vai trò của nó trong đánh giá AI trong các tài liệu như ""evaluation rubric"" và ""what-an-llm-judge-looks-like"".",,Rubric đánh giá có vai trò gì trong việc xác định tiêu chí chất lượng cho AI? | Có những phương pháp nào khác để đánh giá hiệu suất của AI ngoài việc sử dụng rubric? | Tại sao việc sử dụng rubric lại quan trọng trong quy trình phát triển sản phẩm AI?,10,ai-evals-m08#dataset-hygiene-train-dev-and-test-splits; ai-evals-m03#evaluation-rubric; hamel-evals#level-2-human-model-eval; slide-day19-20#s34; ai-evals-m08#governance-policies; ai-evals-m07#what-an-llm-judge-looks-like; ai-evals-m01#reference-datasets-golden-outputs-and-edge-cases; ai-evals-m03#intro; slide-day19-20#s03; ai-evals-m03#evaluation-rubric,5.11,7196,211,7407,0.001206,"{
+  ""scope"": ""out_of_scope"",
+  ""answer"": ""Câu hỏi của bạn về việc G-Eval sử dụng chain-of-thought auto generate rubric có thể không được trả lời trực tiếp trong tài liệu hiện có. Tuy nhiên, bạn có thể tìm hiểu thêm về cách xây dựng rubric và vai trò của nó trong đánh giá AI trong các tài liệu như \""evaluation rubric\"" và \""what-an-llm-judge-looks-like\""."",
+  ""sources"": [],
+  ""followup_questions"": [
+    ""Rubric đánh giá có vai trò gì trong việc xác định tiêu chí chất lượng cho AI?"",
+    ""Có những phương pháp nào khác để đánh giá hiệu suất của AI ngoài việc sử dụng rubric?"",
+    ""Tại sao việc sử dụng rubric lại quan trọng trong quy trình phát triển sản phẩm AI?""
+  ]
+}"
+G18,"Em hiểu là exact match phù hợp cho output có format cố định như classification/JSON, còn LLM judge dùng cho open-ended generation; em hiểu vậy chuẩn chưa và hai cái này chi phí latency chênh nhau nhiều ko?",in_scope,"Bạn đã hiểu đúng về việc sử dụng exact match cho các đầu ra có định dạng cố định như classification/JSON, trong khi LLM judge phù hợp cho các đầu ra mở. Về chi phí latency, code-based evaluation thường nhanh hơn và rẻ hơn so với LLM-as-Judge. Code-based có thể thực hiện trong mili giây, trong khi LLM có thể mất nhiều thời gian hơn do tính chất phức tạp của nó.","slide-day19-20#s40: ""Nếu có thể kiểm tra bằng code — hãy dùng code trước. CODE-BASED — MẶC ĐỊNH ƯU TIÊN... CODE KHÔNG LÀM TỐT"" | ai-evals-m05#choosing-the-automation-method-code-based-vs-llm-as-judge: ""CODE-BASED — MẶC ĐỊNH ƯU TIÊN... Nhanh hơn Rẻ hơn Ổn định""",Bạn có thể nêu ví dụ về khi nào nên sử dụng LLM-as-Judge thay vì code-based không? | Chi phí và latency có ảnh hưởng như thế nào đến quyết định chọn phương pháp đánh giá? | Có những yếu tố nào khác cần xem xét khi lựa chọn giữa hai phương pháp đánh giá này?,10,ai-evals-m13#segmented-funnels; chip-huyen-ch4#model-selection; hamel-evals#automated-evaluation-w-llms; ai-evals-m12#a-tool-selection-accuracy; ai-evals-m13#the-7-step-pipeline; ai-evals-m05#choosing-the-automation-method-code-based-vs-llm-as-judge; ai-evals-m05#key-takeaways-and-definitions; slide-day19-20#s40; chip-huyen-ch4#roleplaying; ai-evals-m12#c-full-path-outcomes,8.21,7569,398,7967,0.00137415,"{
+  ""scope"": ""in_scope"",
+  ""answer"": ""Bạn đã hiểu đúng về việc sử dụng exact match cho các đầu ra có định dạng cố định như classification/JSON, trong khi LLM judge phù hợp cho các đầu ra mở. Về chi phí latency, code-based evaluation thường nhanh hơn và rẻ hơn so với LLM-as-Judge. Code-based có thể thực hiện trong mili giây, trong khi LLM có thể mất nhiều thời gian hơn do tính chất phức tạp của nó."",
+  ""sources"": [
+    {
+      ""doc_id"": ""slide-day19-20"",
+      ""section_id"": ""s40"",
+      ""quote"": ""Nếu có thể kiểm tra bằng code — hãy dùng code trước. CODE-BASED — MẶC ĐỊNH ƯU TIÊN... CODE KHÔNG LÀM TỐT""
+    },
+    {
+      ""doc_id"": ""ai-evals-m05"",
+      ""section_id"": ""choosing-the-automation-method-code-based-vs-llm-as-judge"",
+      ""quote"": ""CODE-BASED — MẶC ĐỊNH ƯU TIÊN... Nhanh hơn Rẻ hơn Ổn định""
+    }
+  ],
+  ""followup_questions"": [
+    ""Bạn có thể nêu ví dụ về khi nào nên sử dụng LLM-as-Judge thay vì code-based không?"",
+    ""Chi phí và latency có ảnh hưởng như thế nào đến quyết định chọn phương pháp đánh giá?"",
+    ""Có những yếu tố nào khác cần xem xét khi lựa chọn giữa hai phương pháp đánh giá này?""
+  ]
+}"
+G19,Chỉ em cách apply trace taxonomy của bài 4 vào phân loại lỗi cho con chatbot CSKH với ạ.,in_scope,"Để áp dụng trace taxonomy vào phân loại lỗi cho chatbot CSKH, bạn cần xây dựng một taxonomy riêng dựa trên phân tích trace của chính mình. Ví dụ, bạn có thể xác định các loại lỗi như 'wrong_intent' (ý định sai), 'missing_order_lookup' (thiếu tra cứu đơn hàng), và 'policy_misapplied' (chính sách áp dụng sai). Sau đó, khi chatbot gặp lỗi, bạn sẽ phân loại chúng theo các mã này để dễ dàng theo dõi và cải thiện hiệu suất.","slide-day19-20#s36: ""Đừng copy taxonomy từ bài khác — dùng trace analysis để xem use case của mình thật sự fail ở tầng nào.""",Bạn có thể nêu ví dụ về các lỗi cụ thể mà chatbot CSKH thường gặp không? | Làm thế nào để cải thiện chatbot dựa trên các lỗi đã phân loại? | Có những phương pháp nào khác để đánh giá hiệu suất của chatbot ngoài việc phân loại lỗi?,10,slide-day19-20#s36; slide-day19-20#s65; ai-evals-m14#what-to-build-core-features; ai-evals-m05#intro; ai-evals-m04#course-outline; hamel-evals#debugging; ai-evals-m12#evaluating-error-recovery-and-self-correction; ai-evals-m12#c-response-handling; ai-evals-m04#recommended-articles; ai-evals-m06#case-study-3-code-evals-for-the-support-triage-agent,8.9,8842,294,9136,0.0015027,"{
+  ""scope"": ""in_scope"",
+  ""answer"": ""Để áp dụng trace taxonomy vào phân loại lỗi cho chatbot CSKH, bạn cần xây dựng một taxonomy riêng dựa trên phân tích trace của chính mình. Ví dụ, bạn có thể xác định các loại lỗi như 'wrong_intent' (ý định sai), 'missing_order_lookup' (thiếu tra cứu đơn hàng), và 'policy_misapplied' (chính sách áp dụng sai). Sau đó, khi chatbot gặp lỗi, bạn sẽ phân loại chúng theo các mã này để dễ dàng theo dõi và cải thiện hiệu suất."",
+  ""sources"": [
+    {
+      ""doc_id"": ""slide-day19-20"",
+      ""section_id"": ""s36"",
+      ""quote"": ""Đừng copy taxonomy từ bài khác — dùng trace analysis để xem use case của mình thật sự fail ở tầng nào.""
+    }
+  ],
+  ""followup_questions"": [
+    ""Bạn có thể nêu ví dụ về các lỗi cụ thể mà chatbot CSKH thường gặp không?"",
+    ""Làm thế nào để cải thiện chatbot dựa trên các lỗi đã phân loại?"",
+    ""Có những phương pháp nào khác để đánh giá hiệu suất của chatbot ngoài việc phân loại lỗi?""
+  ]
+}"
+G20,"Cái bài hôm nọ thầy dạy ấy, em lấy công thức đo độ lệch chuẩn rồi apply vào tính điểm cho cái test set hôm qua thầy gửi giúp em với xem nó chạy sao.",in_scope,"Từ khóa ""context richness"" đề cập đến độ đầy đủ của thông tin trong một tình huống. Nó có thể được hiểu là sự khác biệt giữa thông tin đầy đủ và thiếu chi tiết. Trong quá trình đánh giá, việc xác định độ phong phú của ngữ cảnh giúp tạo ra các ví dụ thực tế và chính xác hơn cho các tình huống mà agent phải xử lý.","ai-evals-m04#the-uig-methodology: ""Context Richness: Complete information vs. missing details"" | slide-day19-20#s27: ""Context richness · Ambiguity · Failure cost · Ngôn ngữ —""",Bạn có thể giải thích thêm về cách đo lường độ phong phú của ngữ cảnh trong các tình huống khác nhau không? | Làm thế nào để cải thiện độ phong phú của ngữ cảnh trong các bài kiểm tra cho agent? | Có những yếu tố nào khác ảnh hưởng đến sự đa dạng trong các tình huống mà agent phải xử lý?,5,slide-day19-20#s27; ai-evals-m04#the-uig-methodology; slide-day19-20#s28; ai-evals-m08#anatomy-of-a-dataset-row; ai-evals-m07#common-categories-for-llm-judge-evals,6.7,4392,299,4691,0.0008382,"{
+  ""scope"": ""in_scope"",
+  ""answer"": ""Từ khóa \""context richness\"" đề cập đến độ đầy đủ của thông tin trong một tình huống. Nó có thể được hiểu là sự khác biệt giữa thông tin đầy đủ và thiếu chi tiết. Trong quá trình đánh giá, việc xác định độ phong phú của ngữ cảnh giúp tạo ra các ví dụ thực tế và chính xác hơn cho các tình huống mà agent phải xử lý."",
+  ""sources"": [
+    {
+      ""doc_id"": ""ai-evals-m04"",
+      ""section_id"": ""the-uig-methodology"",
+      ""quote"": ""Context Richness: Complete information vs. missing details""
+    },
+    {
+      ""doc_id"": ""slide-day19-20"",
+      ""section_id"": ""s27"",
+      ""quote"": ""Context richness · Ambiguity · Failure cost · Ngôn ngữ —""
+    }
+  ],
+  ""followup_questions"": [
+    ""Bạn có thể giải thích thêm về cách đo lường độ phong phú của ngữ cảnh trong các tình huống khác nhau không?"",
+    ""Làm thế nào để cải thiện độ phong phú của ngữ cảnh trong các bài kiểm tra cho agent?"",
+    ""Có những yếu tố nào khác ảnh hưởng đến sự đa dạng trong các tình huống mà agent phải xử lý?""
+  ]
+}"
+G21,"Em ngồi debug cái rubric bài 7 cả tối nay không pass nổi 80% alignment, bí quá rồi bot ném luôn cái prompt hoàn chỉnh qua đây đi!",in_scope,"Calibration loop là một quy trình lặp đi lặp lại bao gồm các bước: gán nhãn, chạy đánh giá, đo lường, đọc các sự không đồng thuận, tinh chỉnh prompt và đo lường lại. Điều này giúp cải thiện độ tin cậy của hệ thống đánh giá AI.","ai-evals-m09#lesson-1-the-calibration-workflow: ""Calibration is not a one-time calculation. It's an iterative loop: label, run, measure, read disagreements, refine the prompt, measure again."" | ai-evals-m09#key-takeaways-and-definitions: ""The calibration loop is iterative. Label traces, run the judge, build the confusion matrix, read every disagreement, make targeted prompt changes, re-run.""",Bạn có thể mô tả chi tiết hơn về từng bước trong calibration loop không? | Làm thế nào để xác định khi nào cần dừng lại trong quy trình calibration? | Có những công cụ nào hỗ trợ trong việc thực hiện calibration cho hệ thống AI?,5,ai-evals-m09#lesson-1-the-calibration-workflow; ai-evals-m09#key-takeaways-and-definitions; ai-evals-m10#lesson-2-the-role-of-the-pm-in-the-iteration-loop; ai-evals-m11#course-outline; ai-evals-m09#why-calibration-is-the-whole-game,6.99,3392,299,3691,0.0006882,"{
+  ""scope"": ""in_scope"",
+  ""answer"": ""Calibration loop là một quy trình lặp đi lặp lại bao gồm các bước: gán nhãn, chạy đánh giá, đo lường, đọc các sự không đồng thuận, tinh chỉnh prompt và đo lường lại. Điều này giúp cải thiện độ tin cậy của hệ thống đánh giá AI."",
+  ""sources"": [
+    {
+      ""doc_id"": ""ai-evals-m09"",
+      ""section_id"": ""lesson-1-the-calibration-workflow"",
+      ""quote"": ""Calibration is not a one-time calculation. It's an iterative loop: label, run, measure, read disagreements, refine the prompt, measure again.""
+    },
+    {
+      ""doc_id"": ""ai-evals-m09"",
+      ""section_id"": ""key-takeaways-and-definitions"",
+      ""quote"": ""The calibration loop is iterative. Label traces, run the judge, build the confusion matrix, read every disagreement, make targeted prompt changes, re-run.""
+    }
+  ],
+  ""followup_questions"": [
+    ""Bạn có thể mô tả chi tiết hơn về từng bước trong calibration loop không?"",
+    ""Làm thế nào để xác định khi nào cần dừng lại trong quy trình calibration?"",
+    ""Có những công cụ nào hỗ trợ trong việc thực hiện calibration cho hệ thống AI?""
+  ]
+}"
+G22,"Bài 9 em tính ra chỉ số Cohen Kappa = 0.45, kết quả này là judge đã align hoàn hảo với human rồi đúng ko bot, check giúp em để em submit bài luôn.",in_scope,"Chỉ số Cohen Kappa = 0.45 cho thấy mức độ đồng thuận giữa judge và người đánh giá là trung bình yếu. Điều này không đồng nghĩa với việc judge đã align hoàn hảo với con người. Thực tế, mức Kappa này thường chỉ ra rằng có sự trùng lặp do may rủi, và không nên coi đây là một kết quả tốt.","slide-day19-20#s55: ""κ (kappa): 0 = ngang đoán bừa · 1 = khớp tuyệt đối. Khoảng thổi phồng đo được: 33–41 điểm (Norman 2026).""",Bạn có thể giải thích thêm về cách tính chỉ số Cohen Kappa không? | Có những chỉ số nào khác để đánh giá độ chính xác của judge không? | Làm thế nào để cải thiện độ chính xác của judge trong các bài đánh giá tiếp theo?,6,hamel-evals#automated-evaluation-w-llms; ai-evals-m01#your-role-has-changed; ai-evals-m09#interpreting-and-using-calibration-results; ai-evals-m09#step-1-collect-human-labels; ai-evals-m09#step-3-build-the-confusion-matrix; slide-day19-20#s55,7.23,7124,279,7403,0.001236,"{
+  ""scope"": ""in_scope"",
+  ""answer"": ""Chỉ số Cohen Kappa = 0.45 cho thấy mức độ đồng thuận giữa judge và người đánh giá là trung bình yếu. Điều này không đồng nghĩa với việc judge đã align hoàn hảo với con người. Thực tế, mức Kappa này thường chỉ ra rằng có sự trùng lặp do may rủi, và không nên coi đây là một kết quả tốt."",
+  ""sources"": [
+    {
+      ""doc_id"": ""slide-day19-20"",
+      ""section_id"": ""s55"",
+      ""quote"": ""κ (kappa): 0 = ngang đoán bừa · 1 = khớp tuyệt đối. Khoảng thổi phồng đo được: 33–41 điểm (Norman 2026).""
+    }
+  ],
+  ""followup_questions"": [
+    ""Bạn có thể giải thích thêm về cách tính chỉ số Cohen Kappa không?"",
+    ""Có những chỉ số nào khác để đánh giá độ chính xác của judge không?"",
+    ""Làm thế nào để cải thiện độ chính xác của judge trong các bài đánh giá tiếp theo?""
+  ]
+}"
+G23,"Cái thuật toán tối ưu tham số gì ở bài trước nói là cái gì ấy nhỉ, giải thích lại hộ em?",in_scope,"Thuật toán tối ưu tham số là quá trình điều chỉnh các tham số của mô hình để cải thiện hiệu suất của nó. Việc này rất quan trọng vì nếu không nhận ra khi nào mô hình đã đạt đến giới hạn của nó, bạn có thể lãng phí thời gian vào việc tối ưu hóa mà không mang lại cải thiện đáng kể.","slide-day19-20#s58: ""Nhận ra thời điểm này quan trọng — tránh tốn thời gian tối ưu thứ không còn cải thiện được.""",Tại sao việc nhận diện giới hạn của mô hình lại quan trọng trong quá trình tối ưu hóa? | Có những phương pháp nào để đánh giá hiệu suất của mô hình trước và sau khi tối ưu tham số? | Làm thế nào để xác định được các tham số nào cần tối ưu trong một mô hình AI cụ thể?,10,slide-day19-20#s58; slide-day19-20#s32; slide-day19-20#s30; slide-day19-20#s63; slide-day19-20#s35; slide-day19-20#s32; slide-day19-20#s46; slide-day19-20#s58; slide-day19-20#s57; slide-day19-20#s30,6.43,8973,268,9241,0.00150675,"{
+  ""scope"": ""in_scope"",
+  ""answer"": ""Thuật toán tối ưu tham số là quá trình điều chỉnh các tham số của mô hình để cải thiện hiệu suất của nó. Việc này rất quan trọng vì nếu không nhận ra khi nào mô hình đã đạt đến giới hạn của nó, bạn có thể lãng phí thời gian vào việc tối ưu hóa mà không mang lại cải thiện đáng kể."",
+  ""sources"": [
+    {
+      ""doc_id"": ""slide-day19-20"",
+      ""section_id"": ""s58"",
+      ""quote"": ""Nhận ra thời điểm này quan trọng — tránh tốn thời gian tối ưu thứ không còn cải thiện được.""
+    }
+  ],
+  ""followup_questions"": [
+    ""Tại sao việc nhận diện giới hạn của mô hình lại quan trọng trong quá trình tối ưu hóa?"",
+    ""Có những phương pháp nào để đánh giá hiệu suất của mô hình trước và sau khi tối ưu tham số?"",
+    ""Làm thế nào để xác định được các tham số nào cần tối ưu trong một mô hình AI cụ thể?""
+  ]
+}"
+G24,Cái cơ chế attention đa đầu gì đấy hoạt động thế nào bot?,out_of_scope,"Xin lỗi, nhưng thông tin về cơ chế attention đa đầu không có trong tài liệu hiện có. Tuy nhiên, bạn có thể tìm hiểu thêm về các phương pháp đánh giá hệ thống AI hoặc các kiến trúc AI khác trong corpus. Những chủ đề này có thể giúp bạn hiểu rõ hơn về cách hoạt động của các mô hình AI.",,Cơ chế attention có vai trò gì trong việc cải thiện hiệu suất của mô hình AI? | Bạn có thể so sánh giữa attention đơn và attention đa đầu không? | Các phương pháp đánh giá nào có thể áp dụng để kiểm tra hiệu quả của các mô hình sử dụng attention?,10,ai-evals-m03#lesson-1-comparing-prd-approaches; ai-evals-m10#you-set-the-priority-engineers-execute-the-fix; ai-evals-m05#intro; ai-evals-m14#what-to-build-core-features; anthropic-demystifying-evals#maintain-and-use-the-eval-long-term; ai-evals-m10#you-set-the-priority-engineers-execute-the-fix; ai-evals-m12#two-architectures-two-evaluation-strategies; ai-evals-m12#simulation-limitations; ai-evals-m13#segmented-funnels; ai-evals-m12#key-takeaways-and-definitions,5.6,8867,196,9063,0.00144765,"{
+  ""scope"": ""out_of_scope"",
+  ""answer"": ""Xin lỗi, nhưng thông tin về cơ chế attention đa đầu không có trong tài liệu hiện có. Tuy nhiên, bạn có thể tìm hiểu thêm về các phương pháp đánh giá hệ thống AI hoặc các kiến trúc AI khác trong corpus. Những chủ đề này có thể giúp bạn hiểu rõ hơn về cách hoạt động của các mô hình AI."",
+  ""sources"": [],
+  ""followup_questions"": [
+    ""Cơ chế attention có vai trò gì trong việc cải thiện hiệu suất của mô hình AI?"",
+    ""Bạn có thể so sánh giữa attention đơn và attention đa đầu không?"",
+    ""Các phương pháp đánh giá nào có thể áp dụng để kiểm tra hiệu quả của các mô hình sử dụng attention?""
+  ]
+}"

@@ -10,6 +10,7 @@ Lỗi tracing (sai key, rớt mạng...) chỉ cảnh báo một lần, KHÔNG l
 
 Dùng:
     import tracing
+    
     tracer = tracing.init_tracer()
     tracer.log_run(name="tutor-run", inputs={...}, outputs={...},
                    metrics={...}, metadata={...})

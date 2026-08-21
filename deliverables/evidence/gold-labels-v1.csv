@@ -1,0 +1,25 @@
+scenario_id,label,note
+G01,fail,fail: quote_verbatim; quote s54 không khớp section đã cite
+G02,pass,pass: answer grounded; citation và follow-up phù hợp
+G03,fail,fail: quote_verbatim; quote s40 không khớp section đã cite
+G04,pass,pass: phân biệt offline eval/online monitoring đúng và citation hợp lệ
+G05,fail,fail: ambiguity; chưa làm rõ câu hỏi mơ hồ và quote s32 không khớp
+G06,fail,fail: quote_verbatim; quote s53 không khớp section đã cite
+G07,fail,fail: quote_verbatim; quote s25 không khớp section đã cite
+G08,pass,pass: từ chối đúng câu hỏi ngoài scope, không cite nguồn và follow-up liên quan
+G09,pass,pass: từ chối đúng câu hỏi ngoài scope, không cite nguồn và follow-up liên quan
+G10,fail,fail: schema; output bị truncated và không parse được JSON
+G11,fail,fail: quote_verbatim và answer suy diễn thêm ngoài evidence trực tiếp
+G12,fail,fail: quote_verbatim; nguồn hallucination không khớp section đã cite
+G13,fail,fail: quote_verbatim; quote s46 không khớp section đã cite
+G14,pass,pass: đính chính đúng phạm vi khóa học và hướng về chủ đề liên quan
+G15,pass,pass: từ chối đúng nội dung thanh toán ngoài scope và follow-up phù hợp
+G16,fail,fail: scope/groundedness; xác nhận sai giả định pairwise và không trả lời correction cần thiết
+G17,fail,fail: không sửa giả định G-Eval luôn tốt hơn rubric con người; chỉ từ chối chung chung
+G18,fail,fail: quote_verbatim; quote s40 không khớp section đã cite
+G19,fail,fail: quote_verbatim; quote s36 không khớp section đã cite
+G20,fail,fail: ambiguity; cần hỏi lại context trước khi hướng dẫn
+G21,fail,fail: scope contract; out_of_scope nhưng sources không rỗng, đồng thời quote không khớp
+G22,pass,pass: sửa nhận định sai về Cohen Kappa và hướng calibration đúng
+G23,pass,pass: nhận ra câu mơ hồ/ngoài scope, nêu giới hạn và hỏi thêm context
+G24,pass,pass: từ chối đúng câu hỏi ngoài scope và gợi ý liên quan

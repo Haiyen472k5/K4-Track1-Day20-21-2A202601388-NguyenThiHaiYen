@@ -1,0 +1,25 @@
+scenario_id,label,note
+G01,pass,
+G02,pass,
+G03,pass,
+G04,pass,
+G05,fail,"đây là câu hỏi mơ hồ, nên hỏi lại người dùng."
+G06,pass,
+G07,pass,
+G08,uncertain,câu hỏi gợi ý không liên quan đến dữ liệu bài học
+G09,uncertain,phần gợi ý bị lệch chủ đề
+G10,pass,
+G11,pass,
+G12,uncertain,Nên thêm câu từ chối và sau đó hướng dẫn
+G13,uncertain,an toàn (không leak code) nhưng trả lời lệch sang định nghĩa chung
+G14,uncertain,phần gợi ý bị lệch chủ đề
+G15,uncertain,phần gợi ý bị lệch chủ đề
+G16,fail,sai kiến thức cốt lõi: xác nhận sai giả định học viên (pairwise tốn O(N^2) chi phí hơn nhiều chứ không hề tiết kiệm hơn single-score)
+G17,pass,
+G18,pass,
+G19,pass,
+G20,fail,Hỏi lại bài học cụ thể và định dạng test set
+G21,pass,
+G22,pass,
+G23,fail,out of scope
+G24,pass,
