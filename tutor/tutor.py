@@ -67,6 +67,12 @@ def load_dotenv(path=os.path.join(ROOT_DIR, ".env")):
             line = line.strip()
             if line and not line.startswith("#") and "=" in line:
                 k, v = line.split("=", 1)
+                v = v.strip()
+                if (v.startswith('"') and '"' in v[1:]) or (v.startswith("'") and "'" in v[1:]):
+                    quote_char = v[0]
+                    v = v[1:v.find(quote_char, 1)]
+                elif "#" in v:
+                    v = v.split("#", 1)[0].strip()
                 os.environ[k.strip()] = v.strip().strip('"').strip("'")
 
 load_dotenv()  # nạp .env TRƯỚC khi đọc các hằng số cấu hình bên dưới
